@@ -3,45 +3,41 @@
 
 struct MenuStates
 {
-	bool debugOpen;
-	bool mainShow;
-	bool playingDemos;
-	bool showFpsOverlay;
-	bool lineupMenuOpen;
+	bool playing_demos = false;
+	bool demoplayer_menu = false;
 	float timescale;
-	int demoNum;
-	char* extraCmd;
-	bool simF9;
-	bool justFinished = false;
-	int fpsSize;
-	int playDemosFrom;
-	int playDemosIndex = 1;
+	int demo_num;
+	char* extra_cmd;
+	bool sim_f9 = false;
+	bool just_finished = false;
+	int play_demos_from;
+	int play_demos_index = 1;
 	bool show_position;
-	bool demoPlaying;
-	bool showFpsImage;
-	bool wtmod;
-	bool threexp;
-	float imageScale = 0.7f;
-	bool veloMeter = false;
+	bool demo_playing = false;
+	bool show_fps_image = false;
+	bool wtmod = false;
+	bool threexp = true;
+	float image_scale = 0.7f;
+	bool velo_meter = false;
 	vec4<float> color = { 0.0f, 1.0f, 0.0f, 1.0f };
-	float veloScale;
-	bool lockVeloPos = true;
-	vec2<float> veloPos;
-	float previousVelo;
+	float velo_scale;
+	bool lock_velo_pos = true;
+	vec2<float> velo_pos;
+	float previous_velo;
 	
-	bool drawMarker1;
-	bool drawMarker2;
-	bool drawMarker3;
+	bool draw_marker1 = false;
+	bool draw_marker2 = false;
+	bool draw_marker3 = false;
 	vec3<float> marker1;
 	vec3<float> marker2;
 	vec3<float> marker3;
 
-	float markerSize = 20.0f;
-	ImVec4 marker1Color = { 1.0f, 0.0f, 0.0f, 1.0f };
-	ImVec4 marker2Color = { 0.0f, 1.0f, 0.0f, 1.0f };
-	ImVec4 marker3Color = { 0.0f, 0.0f, 1.0f, 1.0f };
+	float marker_size = 20.0f;
+	ImVec4 marker1_color = { 1.0f, 0.0f, 0.0f, 1.0f };
+	ImVec4 marker2_color = { 0.0f, 1.0f, 0.0f, 1.0f };
+	ImVec4 marker3_color = { 0.0f, 0.0f, 1.0f, 1.0f };
 
-	char* demoName;
+	char* demo_name;
 	std::string copiedPosition = "";
 };
 
@@ -57,6 +53,7 @@ struct values
 class ui_menu
 {
 	public:
+	void setStyle_noBorder();
 	ui_menu(class CJOpenHud* hud);
 	~ui_menu();
 	void menu(CJOpenHud* hud);
@@ -65,7 +62,11 @@ class ui_menu
 	void LoadConfiguration(vec2<float>& position, vec4<float>& color, float& scale);
 	void SaveConfiguration(const vec2<float>& position, const vec4<float>& color, const float& scale);
 	ImVec4 vec4ToImVec4(vec4<float> vector);
+	void tpToSavedPosition();
+	void playAllDemos();
 	void render();
+	void renderFpsImage();
+	bool LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height);
 
 	MenuStates menuStates;
 	static values values;

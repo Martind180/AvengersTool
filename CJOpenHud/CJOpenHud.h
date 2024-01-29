@@ -13,6 +13,7 @@
 #include "imgui-docking/backends/imgui_impl_dx9.h"
 #include "hook_wrapper.h"
 #include "memory.h"
+#include "ui_demoplayer.h"
 #include "ui_menu.h"
 
 extern "C" {
@@ -36,11 +37,13 @@ public:
 	std::shared_ptr<ui_view> inst_ui_view;
 	std::shared_ptr<ui_settings> inst_ui_settings;
 	std::shared_ptr<ui_menu> inst_ui_menu;
+	std::shared_ptr<ui_demoplayer> inst_ui_demoplayer;
 	
 
 	bool exit = false;
 	bool want_input = false;
 	bool bind_toggle_input(UINT key_state);
+	bool bind_tp_to_saved_pos(UINT key_state);
 	bool bind_close(UINT key_state);
 	static std::shared_ptr<CJOpenHud> inst_CJOpenHud;
 	static CJOpenHud* get_instance();

@@ -20,6 +20,7 @@ class game
 public:
 	HWND get_window(); 
 	bool is_focused();
+	bool is_in_main_menu();
 	LPDIRECT3DDEVICE9 get_device();
     bool is_connected();
     vec3<float> get_view();
@@ -27,5 +28,7 @@ public:
     vec3<float> get_velocity();
 	static void send_command_to_console(const char* command);
 	bool WorldToScreen(vec3<float> world, float* screen_x, float* screen_y);
+	int getFps_wtmod();
+	int getFps_3xp();
 };
 

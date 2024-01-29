@@ -11,6 +11,11 @@ bool game::is_focused()
 	return *(bool*)0x0CC1B704;
 }
 
+bool game::is_in_main_menu()
+{
+	return *reinterpret_cast<int*>(0x00C5F900) == 0;
+}
+
 LPDIRECT3DDEVICE9 game::get_device()
 {
 	return *(LPDIRECT3DDEVICE9*)0xCC9A408;
@@ -70,4 +75,16 @@ bool game::WorldToScreen(vec3<float> World, float* screen_x, float* screen_y)
 	*screen_y = Center.y * (1 - (Transform.y / ref->Refdef.FOV.y / Transform.z));
 
 	return true;
+}
+
+int game::getFps_wtmod()
+{
+	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_wtmod);
+	return maxFps;
+}
+
+int game::getFps_3xp()
+{
+	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_3xp);
+	return maxFps;
 }
