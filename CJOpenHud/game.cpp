@@ -39,3 +39,35 @@ vec3<float> game::get_velocity()
 	vec3<float> vel = *(vec3<float>*)0x79449c;
 	return vel;
 }
+
+void game::send_command_to_console(const char* command)
+{
+	DWORD buffer_cmd = 0x4f8d90;
+	__asm
+	{
+		mov eax, command
+		mov ecx, 0
+		call buffer_cmd
+	}
+}
+
+bool game::WorldToScreen(vec3<float> World, float* screen_x, float* screen_y)
+{
+	cg_t* ref = (cg_t*)0x0074E338;
+	vec3<float> Position = subtractVector(World, ref->Refdef.Origin);
+	vec3<float> Transform;
+
+	Transform.x = dotProduct(Position, ref->Refdef.ViewAxis[1]);
+	Transform.y = dotProduct(Position, ref->Refdef.ViewAxis[2]);
+	Transform.z = dotProduct(Position, ref->Refdef.ViewAxis[0]);
+
+	if (Transform.z < 0.1f)
+		return false;
+
+	vec2<float> Center = { ref->Refdef.ScreenWidth * 0.5f, ref->Refdef.ScreenHeight * 0.5f };
+
+	*screen_x = Center.x * (1 - (Transform.x / ref->Refdef.FOV.x / Transform.z));
+	*screen_y = Center.y * (1 - (Transform.y / ref->Refdef.FOV.y / Transform.z));
+
+	return true;
+}

@@ -25,5 +25,7 @@ public:
     vec3<float> get_view();
     vec3<float> get_origin();
     vec3<float> get_velocity();
+	static void send_command_to_console(const char* command);
+	bool WorldToScreen(vec3<float> world, float* screen_x, float* screen_y);
 };
 

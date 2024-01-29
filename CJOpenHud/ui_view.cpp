@@ -31,7 +31,7 @@ void ui_view::render()
 }
 ui_view::ui_view(CJOpenHud* hud)
 {
-	hud->inst_render->add_callback([this]() { this->render(); });
+	
 }
 ui_view::~ui_view()
 {
