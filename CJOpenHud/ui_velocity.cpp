@@ -20,7 +20,7 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 		pos.x += ImGui::GetIO().MouseDelta.x;
 		pos.y += ImGui::GetIO().MouseDelta.y;
 
-		hud->inst_ui_menu->SaveConfiguration(pos, color, scale);
+		hud->inst_ui_menu->save_configuration();
 	}
 
 	ImVec2 outlinePosition(pos.x + 1, pos.y + 1);
@@ -31,7 +31,7 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 	drawList->AddText(outlinePosition, outlineColor, veloText.c_str());
 	if(prev_velo <= velo)
 	{
-		drawList->AddText(ImVec2(pos.x, pos.y), hud->inst_ui_menu->ImVec4ToImCol32(hud->inst_ui_menu->vec4ToImVec4(color)), veloText.c_str());
+		drawList->AddText(ImVec2(pos.x, pos.y), hud->inst_ui_menu->im_vec4_to_im_col32(hud->inst_ui_menu->vec4_to_im_vec4(color)), veloText.c_str());
 	}
 	else
 	{

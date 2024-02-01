@@ -57,16 +57,16 @@ class ui_menu
 	ui_menu(class CJOpenHud* hud);
 	~ui_menu();
 	void menu(CJOpenHud* hud);
-	static ImU32 ImVec4ToImCol32(ImVec4 color);
-	void SetDefaultConfiguration(vec2<float>& position, vec4<float>& color, float& scale);
-	void LoadConfiguration(vec2<float>& position, vec4<float>& color, float& scale);
-	void SaveConfiguration(const vec2<float>& position, const vec4<float>& color, const float& scale);
-	ImVec4 vec4ToImVec4(vec4<float> vector);
-	void tpToSavedPosition();
-	void playAllDemos();
+	static ImU32 im_vec4_to_im_col32(ImVec4 color);
+	void set_default_configuration(vec2<float> &position, vec4<float> &color, float &scale);
+	void load_configuration();
+	void save_configuration();
+	ImVec4 vec4_to_im_vec4(vec4<float> vector);
+	void tp_to_saved_position();
+	void play_all_demos();
 	void render();
-	void renderFpsImage();
-	bool LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height);
+	void render_fps_image();
+	bool load_texture_from_file(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height);
 
 	MenuStates menuStates;
 	static values values;

@@ -27,7 +27,7 @@ bool CJOpenHud::bind_tp_to_saved_pos(UINT key_state)
 		return true; 
 	if (key_state == WM_KEYUP)
 	{
-		inst_ui_menu->tpToSavedPosition();
+		inst_ui_menu->tp_to_saved_position();
 		return true;
 	}
 }
@@ -49,7 +49,7 @@ CJOpenHud::CJOpenHud()
 	inst_ui_demoplayer = std::shared_ptr<ui_demoplayer>(new ui_demoplayer(this));
 
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
-	inst_input->add_callback(VK_F4, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
+	inst_input->add_callback(VK_F6, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
 	inst_input->add_callback(VK_F3, [this](UINT key_state) { return this->bind_tp_to_saved_pos(key_state); });
 }
 

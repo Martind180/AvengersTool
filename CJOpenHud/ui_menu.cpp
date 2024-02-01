@@ -11,7 +11,7 @@ void ui_menu::menu(CJOpenHud* hud)
 	static bool init = false;
 
 	if (!init) {
-		LoadConfiguration(menuStates.velo_pos, menuStates.color, menuStates.velo_scale);
+		load_configuration();
 		init = true;
 	}
 	
@@ -33,6 +33,12 @@ void ui_menu::menu(CJOpenHud* hud)
 			
 			hud->inst_game->send_command_to_console(ss.str().c_str());
 		}
+		else
+		{
+			std::string cmd = "bind f \"openscriptmenu cj load;stoprecord;record\"";
+
+			hud->inst_game->send_command_to_console(cmd.c_str());
+		}
 	}
 
 	if (ImGui::Button("Copy position"))
@@ -52,7 +58,7 @@ void ui_menu::menu(CJOpenHud* hud)
 	
 	//################# SPEEDOMETER ########################
 	ImGui::Checkbox("Speedometer", &menuStates.velo_meter);
-	ImGui::SameLine(); ImGui::ColorButton("Color Button", vec4ToImVec4(menuStates.color));
+	ImGui::SameLine(); ImGui::ColorButton("Color Button", vec4_to_im_vec4(menuStates.color));
 
 	if(ImGui::IsItemClicked())
 	{
@@ -65,7 +71,7 @@ void ui_menu::menu(CJOpenHud* hud)
 
 		ImGui::EndPopup();
 
-		SaveConfiguration(menuStates.velo_pos, menuStates.color, menuStates.velo_scale);
+		save_configuration();
 	}
 	ImGui::SameLine(); ImGui::Checkbox("Lock Speed Position", &menuStates.lock_velo_pos);
 	
@@ -153,14 +159,16 @@ void ui_menu::menu(CJOpenHud* hud)
 	ImGui::End();
 }
 
-void ui_menu::SetDefaultConfiguration(vec2<float>& position, vec4<float>& color, float& scale) {
+void ui_menu::set_default_configuration(vec2<float> &position, vec4<float> &color, float &scale) {
 	position = vec2(ImGui::GetIO().DisplaySize.x * 0.5f, ImGui::GetIO().DisplaySize.y * 0.5f);
 	color = vec4(0.0f, 1.0f, 0.0f, 1.0f); // green color
 	scale = 1.5f;
 }
 
 // Function to load configuration from a file or set default values
-void ui_menu::LoadConfiguration(vec2<float>& position, vec4<float>& color, float& scale) {
+void ui_menu::load_configuration() {
+	CJOpenHud* hud = CJOpenHud::get_instance();
+	
 	// Specify the file path
 	std::string filePath = "AvengersConfig.txt";
 
@@ -171,16 +179,50 @@ void ui_menu::LoadConfiguration(vec2<float>& position, vec4<float>& color, float
 		if (configFile.is_open()) {
 			std::string line;
 			while (std::getline(configFile, line)) {
-				if (line.find("Position:") != std::string::npos) {
+				if (line.find("Speedometer:") != std::string::npos)
+				{
+					//Parse speedometer boolean
+					std::string bool_string = line.substr(line.find("Speedometer:") + strlen("Speedometer: "));
+
+					if(bool_string == "true")
+					{
+						hud->inst_ui_menu->menuStates.velo_meter = true;
+					}
+					else
+					{
+						hud->inst_ui_menu->menuStates.velo_meter = false;
+					}
+				}
+				else if (line.find("Position:") != std::string::npos) {
 					// Parse position
-					sscanf_s(line.c_str(), "Position: %f %f", &position.x, &position.y);
+					sscanf_s(line.c_str(), "Position: %f %f", &hud->inst_ui_menu->menuStates.velo_pos.x, &hud->inst_ui_menu->menuStates.velo_pos.y);
 				} else if (line.find("Color:") != std::string::npos) {
 					// Parse color
-					sscanf_s(line.c_str(), "Color: %f %f %f %f", &color.x, &color.y, &color.z, &color.w);
+					sscanf_s(line.c_str(), "Color: %f %f %f %f", &hud->inst_ui_menu->menuStates.color.x, &hud->inst_ui_menu->menuStates.color.y, &hud->inst_ui_menu->menuStates.color.z, &hud->inst_ui_menu->menuStates.color.w);
 				}
 				else if (line.find("Scale:") != std::string::npos) {
 					// Parse scale
-					sscanf_s(line.c_str(), "Scale: %f", &scale);
+					sscanf_s(line.c_str(), "Scale: %f", &hud->inst_ui_menu->menuStates.velo_scale);
+				}
+				else if (line.find("PosHud:") != std::string::npos)
+				{
+					//Parse Position boolean
+					std::string bool_string = line.substr(line.find("PosHud:") + strlen("PosHud: "));
+
+					if(bool_string == "true")
+					{
+						hud->inst_ui_menu->menuStates.show_position = true;
+					}
+					else
+					{
+						hud->inst_ui_menu->menuStates.show_position = false;
+					}
+				}
+				else if (line.find("LastCopiedPosition:") != std::string::npos)
+				{
+					std::string pos = line.substr(line.find("LastCopiedPosition:") + strlen("LastCopiedPosition: "));
+
+					hud->inst_ui_menu->menuStates.copiedPosition = pos;
 				}
 			}
 
@@ -190,24 +232,36 @@ void ui_menu::LoadConfiguration(vec2<float>& position, vec4<float>& color, float
 		}
 	} else {
 		std::cout << "Config file not found. Using default values.\n";
-		SetDefaultConfiguration(position,color,scale);  // Set default values if the file doesn't exist
-		SaveConfiguration(position, color, scale);
-		LoadConfiguration(position, color, scale);
+		set_default_configuration(hud->inst_ui_menu->menuStates.velo_pos,hud->inst_ui_menu->menuStates.color,hud->inst_ui_menu->menuStates.velo_scale);  // Set default values if the file doesn't exist
+		save_configuration();
+		load_configuration();
 	}
 }
 
-void ui_menu::SaveConfiguration(const vec2<float>& position, const vec4<float>& color, const float& scale) {
+void ui_menu::save_configuration() {
+	CJOpenHud* hud = CJOpenHud::get_instance();
+	
 	std::ofstream configFile("AvengersConfig.txt");  // Open a file for writing
 
 	if (configFile.is_open()) {
+		// Save Speedometer on
+		configFile << "Speedometer: " << hud->inst_ui_menu->menuStates.velo_meter << "\n";
+		
 		// Save position
-		configFile << "Position: " << position.x << " " << position.y << "\n";
+		configFile << "Position: " << hud->inst_ui_menu->menuStates.velo_pos.x << " " << hud->inst_ui_menu->menuStates.velo_pos.x << "\n";
 
 		// Save color
-		configFile << "Color: " << color.x << " " << color.y << " " << color.z << " " << color.w << "\n";
+		configFile << "Color: " << hud->inst_ui_menu->menuStates.color.x << " " << hud->inst_ui_menu->menuStates.color.y << " " << hud->inst_ui_menu->menuStates.color.z << " " << hud->inst_ui_menu->menuStates.color.w << "\n";
 
 		//Save scale
-		configFile << "Scale: " << scale << "\n";
+		configFile << "Scale: " << hud->inst_ui_menu->menuStates.velo_scale << "\n";
+
+		//Save Position
+		configFile << "PosHud: " << hud->inst_ui_menu->menuStates.show_position << "\n";
+
+		//Save Last Copied Position
+		configFile << "LastCopiedPosition: " << hud->inst_ui_menu->menuStates.copiedPosition << "\n";
+		
 
 		configFile.close();  // Close the file
 	} else {
@@ -215,7 +269,7 @@ void ui_menu::SaveConfiguration(const vec2<float>& position, const vec4<float>& 
 	}
 }
 
-ImU32 ui_menu::ImVec4ToImCol32(ImVec4 color)
+ImU32 ui_menu::im_vec4_to_im_col32(ImVec4 color)
 {
 	return IM_COL32(
 		static_cast<int>(color.x * 255),
@@ -224,12 +278,12 @@ ImU32 ui_menu::ImVec4ToImCol32(ImVec4 color)
 		static_cast<int>(color.w * 255));
 }
 
-ImVec4 ui_menu::vec4ToImVec4(vec4<float> vector)
+ImVec4 ui_menu::vec4_to_im_vec4(vec4<float> vector)
 {
 	return ImVec4(vector.x, vector.y, vector.z, vector.w);
 }
 
-void ui_menu::tpToSavedPosition()
+void ui_menu::tp_to_saved_position()
 {
 	CJOpenHud* hud = CJOpenHud::get_instance();
 
@@ -237,7 +291,7 @@ void ui_menu::tpToSavedPosition()
 		hud->inst_game->send_command_to_console(("setviewpos " + menuStates.copiedPosition).c_str());
 }
 
-void ui_menu::playAllDemos()
+void ui_menu::play_all_demos()
 {
 	CJOpenHud* hud = CJOpenHud::get_instance();
 	static bool demoPlayed = true;
@@ -299,11 +353,7 @@ void ui_menu::render()
 
 	if (menuStates.velo_meter && hud->inst_game->is_connected())
 	{
-		ImGui::Begin("Velocity", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar);
-
 		hud->inst_ui_velocity->render(hud, menuStates.lock_velo_pos, menuStates.velo_pos, menuStates.velo_scale, menuStates.color, menuStates.previous_velo);
-
-		ImGui::End();
 	}
 
 	if (menuStates.draw_marker1 && hud->inst_game->is_connected())
@@ -315,7 +365,7 @@ void ui_menu::render()
 		hud->inst_game->WorldToScreen(menuStates.marker1, &values.pos1.x, &values.pos1.y);
 		
 		ImVec2 center(values.pos1.x, values.pos1.y);
-		ImU32 outlineColor = ImVec4ToImCol32(menuStates.marker1_color);
+		ImU32 outlineColor = im_vec4_to_im_col32(menuStates.marker1_color);
 		int numSegments = 8;
 
 		// Draw a circle around a point
@@ -333,7 +383,7 @@ void ui_menu::render()
 		hud->inst_game->WorldToScreen(menuStates.marker2, &values.pos2.x, &values.pos2.y);
 		
 		ImVec2 center(values.pos2.x, values.pos2.y);
-		ImU32 outlineColor = ImVec4ToImCol32(menuStates.marker2_color);
+		ImU32 outlineColor = im_vec4_to_im_col32(menuStates.marker2_color);
 		int numSegments = 8;
 
 		// Draw a circle around a point
@@ -351,7 +401,7 @@ void ui_menu::render()
 		hud->inst_game->WorldToScreen(menuStates.marker3, &values.pos3.x, &values.pos3.y);
 		
 		ImVec2 center(values.pos3.x, values.pos3.y);
-		ImU32 outlineColor = ImVec4ToImCol32(menuStates.marker3_color);
+		ImU32 outlineColor = im_vec4_to_im_col32(menuStates.marker3_color);
 		int numSegments = 8;
 
 		// Draw a circle around a point
@@ -361,7 +411,7 @@ void ui_menu::render()
 	}
 
 	if (menuStates.playing_demos && !hud->want_input) {
-		playAllDemos();
+		play_all_demos();
 	}
 
 	if (menuStates.just_finished && hud->inst_game->is_in_main_menu()) {
@@ -382,7 +432,7 @@ void ui_menu::render()
 
 	if(menuStates.show_fps_image)
 	{
-		renderFpsImage();
+		render_fps_image();
 	}
 
 	if (hud->want_input && menuStates.demoplayer_menu)
@@ -391,7 +441,7 @@ void ui_menu::render()
 	}
 }
 
-void ui_menu::renderFpsImage()
+void ui_menu::render_fps_image()
 {
 	CJOpenHud* hud = CJOpenHud::get_instance();
 	
@@ -444,17 +494,17 @@ void ui_menu::renderFpsImage()
 	float scale = hud->inst_ui_menu->menuStates.image_scale;
 
 	if (!init) {
-		LoadTextureFromFile("1.png", &texture1, &w1, &h1);
-		LoadTextureFromFile("2.png", &texture2, &w2, &h2);
-		LoadTextureFromFile("3.png", &texture3, &w3, &h3);
-		LoadTextureFromFile("4.png", &texture4, &w4, &h4);
-		LoadTextureFromFile("5.png", &texture5, &w5, &h5);
-		LoadTextureFromFile("6.png", &texture6, &w6, &h6);
-		LoadTextureFromFile("0.png", &texture0, &w0, &h0);
-		LoadTextureFromFile("15.png", &texture15, &w15, &h15);
-		LoadTextureFromFile("40.png", &texture40, &w40, &h40);
-		LoadTextureFromFile("76.png", &texture76, &w76, &h76);
-		LoadTextureFromFile("1000.png", &texture1000, &w1000, &h1000);
+		load_texture_from_file("1.png", &texture1, &w1, &h1);
+		load_texture_from_file("2.png", &texture2, &w2, &h2);
+		load_texture_from_file("3.png", &texture3, &w3, &h3);
+		load_texture_from_file("4.png", &texture4, &w4, &h4);
+		load_texture_from_file("5.png", &texture5, &w5, &h5);
+		load_texture_from_file("6.png", &texture6, &w6, &h6);
+		load_texture_from_file("0.png", &texture0, &w0, &h0);
+		load_texture_from_file("15.png", &texture15, &w15, &h15);
+		load_texture_from_file("40.png", &texture40, &w40, &h40);
+		load_texture_from_file("76.png", &texture76, &w76, &h76);
+		load_texture_from_file("1000.png", &texture1000, &w1000, &h1000);
 		init = true;
 	}
 
@@ -514,7 +564,7 @@ void ui_menu::renderFpsImage()
 	
 }
 
-bool ui_menu::LoadTextureFromFile(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height)
+bool ui_menu::load_texture_from_file(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height)
 {
 	// Load texture from disk
 	PDIRECT3DTEXTURE9 texture;
