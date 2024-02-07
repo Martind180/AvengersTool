@@ -10,10 +10,10 @@ void ui_menu::menu(CJOpenHud* hud)
 	ImGui::Begin("Avengers Helper");
 
 	//################ Demoplayer menu toggle ###############
-	if(ImGui::Button("Demo Player"))
-	{
-		menu_states.demoplayer_menu = !menu_states.demoplayer_menu;
-	}
+	// if(ImGui::Button("Demo Player"))
+	// {
+	// 	menu_states.demoplayer_menu = !menu_states.demoplayer_menu;
+	// }
 	//#######################################################
 
 	//################ Bind demo to load key ###############
