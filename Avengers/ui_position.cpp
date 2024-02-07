@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "ui_position.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 void ui_position::render()
 {
-	CJOpenHud* hud = CJOpenHud::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	if (!hud->inst_game->is_connected()) //only draw while connected to a server
 		return;
 	vec3<float> pos = hud->inst_game->get_origin();
@@ -30,7 +30,7 @@ void ui_position::render()
 	ImGui::End();
 }
 
-ui_position::ui_position(CJOpenHud* hud)
+ui_position::ui_position(Avengers* hud)
 {
 	
 }

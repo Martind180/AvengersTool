@@ -22,13 +22,13 @@ extern "C" {
 	bool __declspec(dllexport) __stdcall RIB_Main(int a, int b);
 }
 
-class CJOpenHud
+class Avengers
 {
 public:
 	void load_configuration();
 	void save_configuration();
-	CJOpenHud();
-	~CJOpenHud();
+	Avengers();
+	~Avengers();
 
 	std::shared_ptr<input> inst_input;
 	std::shared_ptr<render> inst_render;
@@ -53,7 +53,7 @@ public:
 	bool bind_toggle_input(UINT key_state);
 	bool bind_tp_to_saved_pos(UINT key_state);
 	bool bind_close(UINT key_state);
-	static CJOpenHud* inst_CJOpenHud;
-	static CJOpenHud* get_instance();
+	static Avengers* inst_Avengers;
+	static Avengers* get_instance();
 };
 

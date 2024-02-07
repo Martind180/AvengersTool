@@ -2,7 +2,7 @@
 #ifndef CODSTRUCTS_H
 #define CODSTRUCTS_H
 
-#include "CJOpenHud.h"
+#include "Avengers.h"
 #include "windows.h"
 
 #pragma once

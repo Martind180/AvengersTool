@@ -150,7 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CJOpenHud.h" />
+    <ClInclude Include="Avengers.h" />
     <ClInclude Include="cod4Structs.h" />
     <ClInclude Include="CodAddresses.h" />
     <ClInclude Include="framework.h" />
@@ -183,7 +183,7 @@
   <ItemGroup>
     <ClCompile Include="awesomefont1.c" />
     <ClCompile Include="bahnschrift.c" />
-    <ClCompile Include="CJOpenHud.cpp" />
+    <ClCompile Include="Avengers.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="hook_wrapper.cpp" />

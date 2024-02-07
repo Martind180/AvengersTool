@@ -1,5 +1,5 @@
 ﻿#include "ui_fps_image.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -7,7 +7,7 @@
 
 void ui_fps_image::render()
 {
-    CJOpenHud* hud = CJOpenHud::get_instance();
+    Avengers* hud = Avengers::get_instance();
 	
 	static LPDIRECT3DTEXTURE9 texture1 = nullptr;
 	static LPDIRECT3DTEXTURE9 texture2 = nullptr;
@@ -116,7 +116,7 @@ bool ui_fps_image::load_texture_from_file(const char* filename, PDIRECT3DTEXTURE
     return true;
 }
 
-ui_fps_image::ui_fps_image(class CJOpenHud* hud)
+ui_fps_image::ui_fps_image(class Avengers* hud)
 {
 }
 

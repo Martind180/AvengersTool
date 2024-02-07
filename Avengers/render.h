@@ -5,7 +5,7 @@ typedef std::function<void()> RenderCallback;
 class render
 {
 public:
-	render(class CJOpenHud* openhud);
+	render(class Avengers* openhud);
 	~render();
 	void init_graphics();
 	void endscene(LPDIRECT3DDEVICE9 pDevice);

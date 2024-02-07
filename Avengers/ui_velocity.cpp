@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "ui_velocity.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
-void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, float &scale, ImVec4 &color, float &prev_velo)
+void ui_velocity::render(Avengers* &hud, bool &is_locked, vec2<float> &pos, float &scale, ImVec4 &color, float &prev_velo)
 {
 	ImGui::Begin("Velocity", 0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar);	
 
@@ -68,7 +68,7 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 
 	ImGui::End();
 }
-ui_velocity::ui_velocity(CJOpenHud* hud)
+ui_velocity::ui_velocity(Avengers* hud)
 {
 	
 }

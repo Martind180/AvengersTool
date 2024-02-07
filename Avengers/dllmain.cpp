@@ -1,11 +1,11 @@
 // dllmain.cpp : Defines the entry point for the DLL application.
 #include "pch.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 #include <thread>
 
 int main()
 {
-    CJOpenHud inst_hud;
+    Avengers inst_hud;
     //wait for the flag for exit to be set
     while (!inst_hud.exit)
         Sleep(500);
@@ -33,7 +33,7 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     case DLL_THREAD_DETACH:
         break;
     case DLL_PROCESS_DETACH:
-        CJOpenHud::get_instance()->exit = true;
+        Avengers::get_instance()->exit = true;
         break;
     }
     return TRUE;

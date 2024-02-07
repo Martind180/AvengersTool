@@ -1,20 +1,20 @@
 #include "pch.h"
 #include "Render.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 #include "awesomefont1.c"
 #include "bahnschrift.c"
 
 
 void init_graphics_stub()
 {
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	if (openhud && openhud->inst_render)
 		openhud->inst_render->init_graphics();
 }
 
 HRESULT __stdcall EndScene_Hook(LPDIRECT3DDEVICE9 dev)
 {
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	if (openhud && openhud->inst_hooks && openhud->inst_render)
 	{
 		auto orig = openhud->inst_hooks->hook_map["EndScene"]->original(EndScene_Hook)(dev);
@@ -27,7 +27,7 @@ HRESULT __stdcall EndScene_Hook(LPDIRECT3DDEVICE9 dev)
 HRESULT __stdcall Reset_Hook(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters)
 {
 
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	if (openhud && openhud->inst_hooks && openhud->inst_render)
 	{
 
@@ -128,7 +128,7 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 {
 	if (!imgui_initialized)
 	{
-		CJOpenHud* hud = CJOpenHud::get_instance();
+		Avengers* hud = Avengers::get_instance();
 		
 		ImGui_ImplDX9_InvalidateDeviceObjects();
 		IMGUI_CHECKVERSION();
@@ -136,7 +136,7 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 
 		ImGuiIO& io = ImGui::GetIO();
 		io.MouseDrawCursor = false;
-		ImGui_ImplWin32_Init(CJOpenHud::get_instance()->inst_game->get_window());
+		ImGui_ImplWin32_Init(Avengers::get_instance()->inst_game->get_window());
 		ImGui_ImplDX9_Init(dev);
 
 		hud->toxic_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acbahnschrift), sizeof(_acbahnschrift) - 1, 24.f);
@@ -155,7 +155,7 @@ void render::endscene(LPDIRECT3DDEVICE9 dev)
 	init_imgui(dev);
 	auto& io = ImGui::GetIO();
 
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	if (openhud->want_input)
 		io.MouseDrawCursor = true;
 	else
@@ -189,7 +189,7 @@ void render::create_objects(LPDIRECT3DDEVICE9 pDevice)
 }
 void render::init_graphics()
 {
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	//call the original function first
 	openhud->inst_hooks->hook_map["InitGraphics"]->original(init_graphics_stub)();
 	static LPDIRECT3DDEVICE9 current_device = nullptr;
@@ -200,7 +200,7 @@ void render::init_graphics()
 			D3DPRESENT_PARAMETERS p;
 			current_device->Reset(&p);
 		}
-		CJOpenHud* openhud = CJOpenHud::get_instance();
+		Avengers* openhud = Avengers::get_instance();
 
 		if (openhud && openhud->inst_hooks) //remove the old hooks
 		{
@@ -226,7 +226,7 @@ void render::init_graphics()
 
 
 
-render::render(CJOpenHud* openhud)
+render::render(Avengers* openhud)
 {
 	//doing it this way only works if its loaded before initgraphics is called
 	openhud->inst_hooks->Add("InitGraphics", 0x5f4f09, init_graphics_stub, hook_type_replace_call);
@@ -234,7 +234,7 @@ render::render(CJOpenHud* openhud)
 
 render::~render() //hooks are removed when the hook wrapper is destroyed
 {
-	CJOpenHud* openhud = CJOpenHud::get_instance();
+	Avengers* openhud = Avengers::get_instance();
 	if (openhud && openhud->inst_hooks)
 	{
 		if (openhud->inst_hooks->hook_map.count("InitGraphics") > 0)

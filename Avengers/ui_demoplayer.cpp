@@ -1,12 +1,12 @@
 #include "ui_demoplayer.h"
 
 #include "pch.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 
 void ui_demoplayer::render()
 {
-	CJOpenHud* hud = CJOpenHud::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	if(hud->want_input && hud->inst_ui_menu->menu_states.demoplayer_menu)
 	{
 		menu(hud);
@@ -41,7 +41,7 @@ void ui_demoplayer::render()
 	}
 }
 
-void ui_demoplayer::menu(CJOpenHud* hud)
+void ui_demoplayer::menu(Avengers* hud)
 {
 	ImGui::Begin("Demo Player");
 	
@@ -89,7 +89,7 @@ void ui_demoplayer::menu(CJOpenHud* hud)
 
 void ui_demoplayer::play_all_demos()
 {
-	CJOpenHud* hud = CJOpenHud::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	static bool demoPlayed = true;
 	static bool cmdExecuted = false;
 
@@ -131,7 +131,7 @@ void ui_demoplayer::play_all_demos()
 	}
 }
 
-ui_demoplayer::ui_demoplayer(CJOpenHud* hud)
+ui_demoplayer::ui_demoplayer(Avengers* hud)
 {
 	hud->inst_render->add_callback([this]() { this->render(); });
 }

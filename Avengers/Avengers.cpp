@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 #include "ui_demoplayer.h"
 
@@ -9,8 +9,8 @@ bool __stdcall RIB_Main(int a, int b)
 	return true;
 }
 
-CJOpenHud* CJOpenHud::inst_CJOpenHud = nullptr;
-bool CJOpenHud::bind_toggle_input(UINT key_state)
+Avengers* Avengers::inst_Avengers = nullptr;
+bool Avengers::bind_toggle_input(UINT key_state)
 {
 	if (key_state == WM_KEYDOWN) //return true on key down just so nothing else receives the key down stroke
 		return true; 
@@ -21,7 +21,7 @@ bool CJOpenHud::bind_toggle_input(UINT key_state)
 	}
 }
 
-bool CJOpenHud::bind_tp_to_saved_pos(UINT key_state)
+bool Avengers::bind_tp_to_saved_pos(UINT key_state)
 {
 	if (key_state == WM_KEYDOWN) //return true on key down just so nothing else receives the key down stroke
 		return true; 
@@ -34,7 +34,7 @@ bool CJOpenHud::bind_tp_to_saved_pos(UINT key_state)
 }
 
 // Function to load configuration from a file or set default values
-void CJOpenHud::load_configuration() {
+void Avengers::load_configuration() {
 	// Specify the file path
 	std::string filePath = "AvengersConfig.txt";
 
@@ -91,7 +91,7 @@ void CJOpenHud::load_configuration() {
 	}
 }
 
-void CJOpenHud::save_configuration() {
+void Avengers::save_configuration() {
 	
 	std::ofstream configFile("AvengersConfig.txt");  // Open a file for writing
 
@@ -126,10 +126,10 @@ void CJOpenHud::save_configuration() {
 	}
 }
 
-CJOpenHud::CJOpenHud()
+Avengers::Avengers()
 {
 	exit = false;
-	inst_CJOpenHud = this;
+	inst_Avengers = this;
 	inst_hooks = std::shared_ptr<hook_wrapper>(new hook_wrapper);
 	inst_game = std::shared_ptr<game>(new game());
 	inst_input = std::shared_ptr<input>(new input(this));
@@ -154,11 +154,11 @@ CJOpenHud::CJOpenHud()
 	load_configuration();
 }
 
-CJOpenHud::~CJOpenHud()
+Avengers::~Avengers()
 {
 }
 
-CJOpenHud* CJOpenHud::get_instance()
+Avengers* Avengers::get_instance()
 {
-	return inst_CJOpenHud;
+	return inst_Avengers;
 }

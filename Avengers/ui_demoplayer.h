@@ -21,10 +21,10 @@ struct demo_player_states
 class ui_demoplayer
 {
 public:
-	ui_demoplayer(class CJOpenHud* hud);
+	ui_demoplayer(class Avengers* hud);
 	~ui_demoplayer();
 	void render();
-	void menu(CJOpenHud* hud);
+	void menu(Avengers* hud);
 	void play_all_demos();
 
 	demo_player_states demo_player_states;

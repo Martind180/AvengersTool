@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "ui_menu.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 
 values ui_menu::values;
 
-void ui_menu::menu(CJOpenHud* hud)
+void ui_menu::menu(Avengers* hud)
 {
 	ImGui::Begin("Avengers Helper");
 
@@ -171,7 +171,7 @@ void ui_menu::menu(CJOpenHud* hud)
 
 void ui_menu::render()
 {
-	CJOpenHud* hud = CJOpenHud::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	
 	if(hud->want_input)
 	{
@@ -207,7 +207,7 @@ void ui_menu::render()
 	}
 }
 
-ui_menu::ui_menu(CJOpenHud* hud)
+ui_menu::ui_menu(Avengers* hud)
 {
 	hud->inst_render->add_callback([this]() { this->render(); });
 }

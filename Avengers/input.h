@@ -5,7 +5,7 @@ typedef std::function<bool(UINT state)> InputCallback;
 class input
 {
 public:
-	input(class CJOpenHud* pinst_openhud);
+	input(class Avengers* pinst_openhud);
 	~input();
 	bool handle_key(UINT key_code, UINT state);
 	WNDPROC p_wndproc = nullptr;

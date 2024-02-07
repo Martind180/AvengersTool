@@ -42,9 +42,9 @@ struct values
 class ui_menu
 {
 	public:
-	ui_menu(class CJOpenHud* hud);
+	ui_menu(class Avengers* hud);
 	~ui_menu();
-	void menu(CJOpenHud* hud);
+	void menu(Avengers* hud);
 	void render();
 
 	menu_states menu_states;

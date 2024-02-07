@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "ui_view.h"
-#include "CJOpenHud.h"
+#include "Avengers.h"
 
 void ui_view::render()
 {
-	CJOpenHud* hud = CJOpenHud::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	if (!hud->inst_game->is_connected()) //only draw while connected to a server
 		return;
 	vec3<float> view = hud->inst_game->get_view();
@@ -29,7 +29,7 @@ void ui_view::render()
 	ImGui::EndTable();
 	ImGui::End();
 }
-ui_view::ui_view(CJOpenHud* hud)
+ui_view::ui_view(Avengers* hud)
 {
 	
 }
