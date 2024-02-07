@@ -27,8 +27,102 @@ bool CJOpenHud::bind_tp_to_saved_pos(UINT key_state)
 		return true; 
 	if (key_state == WM_KEYUP)
 	{
-		inst_ui_menu->tp_to_saved_position();
+		if(inst_ui_menu->menuStates.copiedPosition != "" && inst_game->is_connected())
+			inst_game->send_command_to_console(("setviewpos " + inst_ui_menu->menuStates.copiedPosition).c_str());
 		return true;
+	}
+}
+
+// Function to load configuration from a file or set default values
+void CJOpenHud::load_configuration() {
+	// Specify the file path
+	std::string filePath = "AvengersConfig.txt";
+
+	// Check if the file exists
+	if (std::ifstream config_file(filePath); config_file.is_open()) {
+		std::string line;
+		while (std::getline(config_file, line)) {
+			if (line.find("Speedometer:") != std::string::npos)
+			{
+				int value;
+				//Parse speedometer boolean
+				sscanf_s(line.c_str(), "Speedometer: %d", &value);
+
+				inst_ui_menu->menuStates.velo_meter = value == 1;
+			}
+			else if(line.find("SepVelo:") != std::string::npos)
+			{
+				int value1;
+				//Parse sep speedometer boolean
+				sscanf_s(line.c_str(), "SepVelo: %d", &value1);
+
+				inst_ui_menu->menuStates.sep_velo = value1 == 1;
+			}
+			else if (line.find("Position:") != std::string::npos) {
+				// Parse position
+				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->menuStates.velo_pos.x, &inst_ui_menu->menuStates.velo_pos.y);
+			} else if (line.find("Color:") != std::string::npos) {
+				// Parse color
+				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->menuStates.color.x, &inst_ui_menu->menuStates.color.y, &inst_ui_menu->menuStates.color.z, &inst_ui_menu->menuStates.color.w);
+			}
+			else if (line.find("Scale:") != std::string::npos) {
+				// Parse scale
+				sscanf_s(line.c_str(), "Scale: %f", &inst_ui_menu->menuStates.velo_scale);
+			}
+			else if (line.find("PosHud:") != std::string::npos)
+			{
+				//Parse Position boolean
+				int value;
+				//Parse speedometer boolean
+				sscanf_s(line.c_str(), "Speedometer: %d", &value);
+
+				inst_ui_menu->menuStates.show_position = value == 1;
+			}
+			else if (line.find("LastCopiedPosition:") != std::string::npos)
+			{
+				sscanf_s(line.c_str(), "Scale: %[^\n]", &inst_ui_menu->menuStates.copiedPosition);
+			}
+		}
+
+		config_file.close();
+	} else {
+		std::cout << "Config file not found. Using default values.\n";
+		save_configuration();
+	}
+}
+
+void CJOpenHud::save_configuration() {
+	
+	std::ofstream configFile("AvengersConfig.txt");  // Open a file for writing
+
+	if (configFile.is_open()) {
+		// Save Speedometer on
+		configFile << "Speedometer: " << inst_ui_menu->menuStates.velo_meter << "\n";
+
+		// Save Sep Speedometer on
+		configFile << "SepVelo: " << inst_ui_menu->menuStates.sep_velo << "\n";
+		
+		// Save position
+		configFile << "Position: " << inst_ui_menu->menuStates.velo_pos.x << " " << inst_ui_menu->menuStates.velo_pos.y << "\n";
+
+		// Save color
+		configFile << "Color: " << inst_ui_menu->menuStates.color.x << " " << inst_ui_menu->menuStates.color.y << " " << inst_ui_menu->menuStates.color.z << " " << inst_ui_menu->menuStates.color.w << "\n";
+
+		//Save scale
+		configFile << "Scale: " << inst_ui_menu->menuStates.velo_scale << "\n";
+
+		//Save Position
+		configFile << "PosHud: " << inst_ui_menu->menuStates.show_position << "\n";
+
+		//Save Last Copied Position
+		if (inst_ui_menu->menuStates.copiedPosition != "")
+		{
+			configFile << "LastCopiedPosition: " << inst_ui_menu->menuStates.copiedPosition << "\n";
+		}
+
+		configFile.close();  // Close the file
+	} else {
+		std::cerr << "Error opening config file for writing\n";
 	}
 }
 
@@ -44,13 +138,18 @@ CJOpenHud::CJOpenHud()
 	inst_ui_settings = std::shared_ptr<ui_settings>(new ui_settings(this));
 	inst_ui_position = std::shared_ptr<ui_position>(new ui_position(this));
 	inst_ui_velocity = std::shared_ptr<ui_velocity>(new ui_velocity(this));
+	inst_ui_velocity_sep = std::shared_ptr<ui_velocity_sep>(new ui_velocity_sep(this));
 	inst_ui_view = std::shared_ptr<ui_view>(new ui_view(this));
 	inst_ui_menu = std::shared_ptr<ui_menu>(new ui_menu(this));
 	inst_ui_demoplayer = std::shared_ptr<ui_demoplayer>(new ui_demoplayer(this));
+	inst_ui_position_marker = std::shared_ptr<ui_position_marker>(new ui_position_marker(this));
+	inst_ui_fps_image = std::shared_ptr<ui_fps_image>(new ui_fps_image(this));
 
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
 	inst_input->add_callback(VK_F6, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
 	inst_input->add_callback(VK_F3, [this](UINT key_state) { return this->bind_tp_to_saved_pos(key_state); });
+
+	load_configuration();
 }
 
 CJOpenHud::~CJOpenHud()

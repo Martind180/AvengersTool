@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Render.h"
 #include "CJOpenHud.h"
+#include "awesomefont1.c"
+#include "bahnschrift.c"
 
 
 void init_graphics_stub()
@@ -126,6 +128,8 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 {
 	if (!imgui_initialized)
 	{
+		CJOpenHud* hud = CJOpenHud::get_instance();
+		
 		ImGui_ImplDX9_InvalidateDeviceObjects();
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -134,7 +138,10 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 		io.MouseDrawCursor = false;
 		ImGui_ImplWin32_Init(CJOpenHud::get_instance()->inst_game->get_window());
 		ImGui_ImplDX9_Init(dev);
-		io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\Bahnschrift.ttf", 24);
+
+		hud->toxic_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acbahnschrift), sizeof(_acbahnschrift) - 1, 24.f);
+		hud->sep_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acawesomefont1), sizeof(_acawesomefont1) - 1, 32.f);
+		
 		ImGui_ImplDX9_CreateDeviceObjects();
 		imgui_initialized = true;
 

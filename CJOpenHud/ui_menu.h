@@ -3,26 +3,14 @@
 
 struct MenuStates
 {
-	bool playing_demos = false;
 	bool demoplayer_menu = false;
-	float timescale;
-	int demo_num;
-	char* extra_cmd;
-	bool sim_f9 = false;
-	bool just_finished = false;
-	int play_demos_from;
-	int play_demos_index = 1;
-	bool show_position;
-	bool demo_playing = false;
-	bool show_fps_image = false;
-	bool wtmod = false;
-	bool threexp = true;
-	float image_scale = 0.7f;
+	bool show_position = false;
 	bool velo_meter = false;
-	vec4<float> color = { 0.0f, 1.0f, 0.0f, 1.0f };
-	float velo_scale;
+	bool sep_velo = false;
+	ImVec4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
+	float velo_scale = 1.5;
 	bool lock_velo_pos = true;
-	vec2<float> velo_pos;
+	vec2<float> velo_pos = vec2<float>(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);
 	float previous_velo;
 	
 	bool draw_marker1 = false;
@@ -53,20 +41,10 @@ struct values
 class ui_menu
 {
 	public:
-	void setStyle_noBorder();
 	ui_menu(class CJOpenHud* hud);
 	~ui_menu();
 	void menu(CJOpenHud* hud);
-	static ImU32 im_vec4_to_im_col32(ImVec4 color);
-	void set_default_configuration(vec2<float> &position, vec4<float> &color, float &scale);
-	void load_configuration();
-	void save_configuration();
-	ImVec4 vec4_to_im_vec4(vec4<float> vector);
-	void tp_to_saved_position();
-	void play_all_demos();
 	void render();
-	void render_fps_image();
-	bool load_texture_from_file(const char* filename, PDIRECT3DTEXTURE9* out_texture, int* out_width, int* out_height);
 
 	MenuStates menuStates;
 	static values values;
