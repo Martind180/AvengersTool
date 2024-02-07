@@ -77,10 +77,10 @@ void ui_fps_image::render()
 	
 	int fps = 0;
 	if (hud->inst_ui_demoplayer->demo_player_states.threexp) {
-		fps = hud->inst_game->getFps_3xp();
+		fps = hud->inst_game->get_fps_3_xp();
 	}
 	else {
-		fps = hud->inst_game->getFps_wtmod();
+		fps = hud->inst_game->get_fps_wtmod();
 	}
 
 	switch (fps)

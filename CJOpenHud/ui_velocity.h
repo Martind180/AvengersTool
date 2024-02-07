@@ -4,6 +4,8 @@
 
 class ui_velocity
 {
+	int frames_since_last_color_update_ = 0;
+	bool velocity_increasing_ = false;
 public:
 	ui_velocity(class CJOpenHud* hud);
 	~ui_velocity();

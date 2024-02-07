@@ -13,7 +13,7 @@ bool game::is_focused()
 
 bool game::is_in_main_menu()
 {
-	return *reinterpret_cast<int*>(0x00C5F900) == 0;
+	return *reinterpret_cast<int*>(addr_ingame) == connection_state_uninitialized;
 }
 
 LPDIRECT3DDEVICE9 game::get_device()
@@ -23,25 +23,25 @@ LPDIRECT3DDEVICE9 game::get_device()
 
 bool game::is_connected()
 {
-	int state = *(int*)0xC5F900;
+	int state = *(int*)addr_ingame;
 	return state == connection_state_connected;
 }
 
 vec3<float> game::get_view()
 {
-	vec3<float> view = *(vec3<float>*)0x79B698;
+	vec3<float> view = *(vec3<float>*)addr_view;
 	return view;
 }
 
 vec3<float> game::get_origin()
 {
-	vec3<float> pos = *(vec3<float>*)0x794490;
+	vec3<float> pos = *(vec3<float>*)addr_position;
 	return pos;
 }
 
 vec3<float> game::get_velocity()
 {
-	vec3<float> vel = *(vec3<float>*)0x79449c;
+	vec3<float> vel = *(vec3<float>*)addr_velocity;
 	return vel;
 }
 
@@ -56,34 +56,35 @@ void game::send_command_to_console(const char* command)
 	}
 }
 
-bool game::WorldToScreen(vec3<float> World, float* screen_x, float* screen_y)
+bool game::world_to_screen(vec3<float> world, float* screen_x, float* screen_y)
 {
 	cg_t* ref = (cg_t*)0x0074E338;
-	vec3<float> Position = subtractVector(World, ref->Refdef.Origin);
-	vec3<float> Transform;
-
-	Transform.x = dotProduct(Position, ref->Refdef.ViewAxis[1]);
-	Transform.y = dotProduct(Position, ref->Refdef.ViewAxis[2]);
-	Transform.z = dotProduct(Position, ref->Refdef.ViewAxis[0]);
-
-	if (Transform.z < 0.1f)
+	
+	vec3<float> position = world - ref->Refdef.Origin;
+	
+	vec3<float> transform;
+	transform.x = position.DotProduct(ref->Refdef.ViewAxis[1]);
+	transform.y = position.DotProduct(ref->Refdef.ViewAxis[2]);
+	transform.z = position.DotProduct(ref->Refdef.ViewAxis[0]);
+	
+	if (transform.z < 0.1f)
 		return false;
 
-	vec2<float> Center = { ref->Refdef.ScreenWidth * 0.5f, ref->Refdef.ScreenHeight * 0.5f };
+	vec2 center = { ref->Refdef.ScreenWidth * 0.5f, ref->Refdef.ScreenHeight * 0.5f };
 
-	*screen_x = Center.x * (1 - (Transform.x / ref->Refdef.FOV.x / Transform.z));
-	*screen_y = Center.y * (1 - (Transform.y / ref->Refdef.FOV.y / Transform.z));
+	*screen_x = center.x * (1 - (transform.x / ref->Refdef.FOV.x / transform.z));
+	*screen_y = center.y * (1 - (transform.y / ref->Refdef.FOV.y / transform.z));
 
 	return true;
 }
 
-int game::getFps_wtmod()
+int game::get_fps_wtmod()
 {
 	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_wtmod);
 	return maxFps;
 }
 
-int game::getFps_3xp()
+int game::get_fps_3_xp()
 {
 	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_3xp);
 	return maxFps;

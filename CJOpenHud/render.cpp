@@ -140,7 +140,7 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 		ImGui_ImplDX9_Init(dev);
 
 		hud->toxic_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acbahnschrift), sizeof(_acbahnschrift) - 1, 24.f);
-		hud->sep_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acawesomefont1), sizeof(_acawesomefont1) - 1, 32.f);
+		hud->sep_font = io.Fonts->AddFontFromMemoryTTF((void*)(_acawesomefont1), sizeof(_acawesomefont1) - 1, 24.f);
 		
 		ImGui_ImplDX9_CreateDeviceObjects();
 		imgui_initialized = true;

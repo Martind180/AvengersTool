@@ -17,7 +17,6 @@
 #include "ui_fps_image.h"
 #include "ui_menu.h"
 #include "ui_position_marker.h"
-#include "ui_velocity_sep.h"
 
 extern "C" {
 	bool __declspec(dllexport) __stdcall RIB_Main(int a, int b);
@@ -39,7 +38,6 @@ public:
 
 	std::shared_ptr<ui_position> inst_ui_position;
 	std::shared_ptr<ui_velocity> inst_ui_velocity;
-	std::shared_ptr<ui_velocity_sep> inst_ui_velocity_sep;
 	std::shared_ptr<ui_view> inst_ui_view;
 	std::shared_ptr<ui_settings> inst_ui_settings;
 	std::shared_ptr<ui_menu> inst_ui_menu;

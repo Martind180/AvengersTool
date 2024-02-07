@@ -12,7 +12,7 @@ void ui_menu::menu(CJOpenHud* hud)
 	//################ Demoplayer menu toggle ###############
 	if(ImGui::Button("Demo Player"))
 	{
-		menuStates.demoplayer_menu = !menuStates.demoplayer_menu;
+		menu_states.demoplayer_menu = !menu_states.demoplayer_menu;
 	}
 	//#######################################################
 
@@ -46,12 +46,12 @@ void ui_menu::menu(CJOpenHud* hud)
 		std::stringstream ss;
 		ss << std::fixed << std::setprecision(6) << pos.x <<  " " << pos.y << " " << pos.z + 60 << " " << view.y << " " << view.x;
 
-		menuStates.copiedPosition = ss.str();
+		menu_states.copied_position = ss.str();
 		hud->save_configuration();
 		
-		ImGui::SetClipboardText(menuStates.copiedPosition.c_str());
+		ImGui::SetClipboardText(menu_states.copied_position.c_str());
 	}
-	ImGui::SameLine(); if(ImGui::Checkbox("Show Coordinates", &menuStates.show_position))
+	ImGui::SameLine(); if(ImGui::Checkbox("Show Coordinates", &menu_states.show_position))
 	{
 		hud->save_configuration();
 	}
@@ -59,12 +59,12 @@ void ui_menu::menu(CJOpenHud* hud)
 	//#######################################################
 	
 	//################# SPEEDOMETER ########################
-	if (ImGui::Checkbox("Speedometer", &menuStates.velo_meter))
+	if (ImGui::Checkbox("Speedometer", &menu_states.velo_meter))
 	{
 		hud->save_configuration();
 	}
 	
-	ImGui::SameLine(); ImGui::ColorButton("Color Button", menuStates.color);
+	ImGui::SameLine(); ImGui::ColorButton("Color Button", menu_states.color);
 
 	if(ImGui::IsItemClicked())
 	{
@@ -73,20 +73,20 @@ void ui_menu::menu(CJOpenHud* hud)
 
 	if(ImGui::BeginPopup("ColorPickerPopup"))
 	{
-		ImGui::ColorPicker4("Color Picker", &menuStates.color.x);
+		ImGui::ColorPicker4("Color Picker", &menu_states.color.x);
 
 		ImGui::EndPopup();
 
 		hud->save_configuration();
 	}
-	ImGui::SameLine(); ImGui::Checkbox("Lock Speed Position", &menuStates.lock_velo_pos);
+	ImGui::SameLine(); ImGui::Checkbox("Lock Speed Position", &menu_states.lock_velo_pos);
 
-	if(ImGui::Checkbox("Sep Speedometer", &menuStates.sep_velo))
+	if(ImGui::Checkbox("Sep Speedometer", &menu_states.sep_velo))
 	{
 		hud->save_configuration();
 	}
 	
-	if(ImGui::SliderFloat("Speed Size", &menuStates.velo_scale, 0.01f, 10.f))
+	if(ImGui::SliderFloat("Speed Size", &menu_states.velo_scale, 0.01f, 10.f))
 	{
 		hud->save_configuration();
 	}
@@ -95,10 +95,10 @@ void ui_menu::menu(CJOpenHud* hud)
 	//################# POSITION MARKERS ########################
 	if (ImGui::Button("Mark Position 1"))
 	{
-		menuStates.draw_marker1 = true;
-		menuStates.marker1 = hud->inst_game->get_origin();
+		menu_states.draw_marker1 = true;
+		menu_states.marker1 = hud->inst_game->get_origin();
 	}
-	ImGui::SameLine(); ImGui::ColorButton("Marker 1 Colour Button", menuStates.marker1_color);
+	ImGui::SameLine(); ImGui::ColorButton("Marker 1 Colour Button", menu_states.marker1_color);
 
 	if(ImGui::IsItemClicked())
 	{
@@ -107,21 +107,21 @@ void ui_menu::menu(CJOpenHud* hud)
 
 	if(ImGui::BeginPopup("Marker1ColorPickerPopup"))
 	{
-		ImGui::ColorPicker4("Color Picker", &menuStates.marker1_color.x);
+		ImGui::ColorPicker4("Color Picker", &menu_states.marker1_color.x);
 
 		ImGui::EndPopup();
 	}
 	ImGui::SameLine(); if (ImGui::Button("Remove Marker 1"))
 	{
-		menuStates.draw_marker1 = false;
+		menu_states.draw_marker1 = false;
 	}
 	
 	if (ImGui::Button("Mark Position 2"))
 	{
-		menuStates.draw_marker2 = true;
-		menuStates.marker2 = hud->inst_game->get_origin();
+		menu_states.draw_marker2 = true;
+		menu_states.marker2 = hud->inst_game->get_origin();
 	}
-	ImGui::SameLine(); ImGui::ColorButton("Marker 2 Colour Button", menuStates.marker2_color);
+	ImGui::SameLine(); ImGui::ColorButton("Marker 2 Colour Button", menu_states.marker2_color);
 
 	if(ImGui::IsItemClicked())
 	{
@@ -130,21 +130,21 @@ void ui_menu::menu(CJOpenHud* hud)
 
 	if(ImGui::BeginPopup("Marker2ColorPickerPopup"))
 	{
-		ImGui::ColorPicker4("Color Picker", &menuStates.marker2_color.x);
+		ImGui::ColorPicker4("Color Picker", &menu_states.marker2_color.x);
 
 		ImGui::EndPopup();
 	}
 	ImGui::SameLine(); if (ImGui::Button("Remove Marker 2"))
 	{
-		menuStates.draw_marker2 = false;
+		menu_states.draw_marker2 = false;
 	}
 	
 	if (ImGui::Button("Mark Position 3"))
 	{
-		menuStates.draw_marker3 = true;
-		menuStates.marker3 = hud->inst_game->get_origin();
+		menu_states.draw_marker3 = true;
+		menu_states.marker3 = hud->inst_game->get_origin();
 	}
-	ImGui::SameLine(); ImGui::ColorButton("Marker 3 Colour Button", menuStates.marker3_color);
+	ImGui::SameLine(); ImGui::ColorButton("Marker 3 Colour Button", menu_states.marker3_color);
 
 	if(ImGui::IsItemClicked())
 	{
@@ -153,16 +153,16 @@ void ui_menu::menu(CJOpenHud* hud)
 
 	if(ImGui::BeginPopup("Marker3ColorPickerPopup"))
 	{
-		ImGui::ColorPicker4("Color Picker", &menuStates.marker3_color.x);
+		ImGui::ColorPicker4("Color Picker", &menu_states.marker3_color.x);
 
 		ImGui::EndPopup();
 	}
 	ImGui::SameLine(); if (ImGui::Button("Remove Marker 3"))
 	{
-		menuStates.draw_marker3 = false;
+		menu_states.draw_marker3 = false;
 	}
 
-	ImGui::SliderFloat("Marker Size", &menuStates.marker_size, 5.0f, 100.0f);
+	ImGui::SliderFloat("Marker Size", &menu_states.marker_size, 5.0f, 100.0f);
 	//#######################################################
 
 	
@@ -178,36 +178,32 @@ void ui_menu::render()
 		menu(hud);
 	}
 
-	if (menuStates.show_position) {
+	if (menu_states.show_position) {
 		hud->inst_ui_position->render();
 		hud->inst_ui_view->render();
 
 		hud->save_configuration();
 	}
 
-	if (menuStates.velo_meter && hud->inst_game->is_connected())
+	//Render speedometer
+	if ((menu_states.velo_meter || menu_states.sep_velo) && hud->inst_game->is_connected())
 	{
-		hud->inst_ui_velocity->render(hud, menuStates.lock_velo_pos, menuStates.velo_pos, menuStates.velo_scale, menuStates.color, menuStates.previous_velo);
-	}
-	
-	if(menuStates.sep_velo && hud->inst_game->is_connected())
-	{
-		hud->inst_ui_velocity_sep->render(hud, menuStates.lock_velo_pos, menuStates.velo_pos, menuStates.velo_scale, menuStates.color, menuStates.previous_velo);
+		hud->inst_ui_velocity->render(hud, menu_states.lock_velo_pos, menu_states.velo_pos, menu_states.velo_scale, menu_states.color, menu_states.previous_velo);
 	}
 
-	if (menuStates.draw_marker1 && hud->inst_game->is_connected())
+	//Draw markers
+	//This can probably be made much better using an array to draw as many markers as needed if they shared the same color values
+	if (menu_states.draw_marker1 && hud->inst_game->is_connected())
 	{
-		hud->inst_ui_position_marker->render(menuStates.marker1, values.pos1, menuStates.marker1_color, menuStates.marker_size);
+		hud->inst_ui_position_marker->render(menu_states.marker1, values.pos1, menu_states.marker1_color, menu_states.marker_size);
 	}
-
-	if (menuStates.draw_marker2 && hud->inst_game->is_connected())
+	if (menu_states.draw_marker2 && hud->inst_game->is_connected())
 	{
-		hud->inst_ui_position_marker->render(menuStates.marker2, values.pos2, menuStates.marker2_color, menuStates.marker_size);
+		hud->inst_ui_position_marker->render(menu_states.marker2, values.pos2, menu_states.marker2_color, menu_states.marker_size);
 	}
-
-	if (menuStates.draw_marker3 && hud->inst_game->is_connected())
+	if (menu_states.draw_marker3 && hud->inst_game->is_connected())
 	{
-		hud->inst_ui_position_marker->render(menuStates.marker3, values.pos3, menuStates.marker3_color, menuStates.marker_size);
+		hud->inst_ui_position_marker->render(menu_states.marker3, values.pos3, menu_states.marker3_color, menu_states.marker_size);
 	}
 }
 

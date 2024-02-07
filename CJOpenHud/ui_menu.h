@@ -1,7 +1,7 @@
 #pragma once
 #include "vectors.h"
 
-struct MenuStates
+struct menu_states
 {
 	bool demoplayer_menu = false;
 	bool show_position = false;
@@ -10,6 +10,7 @@ struct MenuStates
 	ImVec4 color = { 0.0f, 1.0f, 0.0f, 1.0f };
 	float velo_scale = 1.5;
 	bool lock_velo_pos = true;
+	// Default the position to the center of the screen if there is no position in the config file
 	vec2<float> velo_pos = vec2<float>(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);
 	float previous_velo;
 	
@@ -26,7 +27,7 @@ struct MenuStates
 	ImVec4 marker3_color = { 0.0f, 0.0f, 1.0f, 1.0f };
 
 	char* demo_name;
-	std::string copiedPosition = "";
+	std::string copied_position;
 };
 
 struct values
@@ -46,7 +47,7 @@ class ui_menu
 	void menu(CJOpenHud* hud);
 	void render();
 
-	MenuStates menuStates;
+	menu_states menu_states;
 	static values values;
 };
 

@@ -7,7 +7,7 @@
 void ui_demoplayer::render()
 {
 	CJOpenHud* hud = CJOpenHud::get_instance();
-	if(hud->want_input && hud->inst_ui_menu->menuStates.demoplayer_menu)
+	if(hud->want_input && hud->inst_ui_menu->menu_states.demoplayer_menu)
 	{
 		menu(hud);
 	}

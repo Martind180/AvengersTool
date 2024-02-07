@@ -27,8 +27,8 @@ bool CJOpenHud::bind_tp_to_saved_pos(UINT key_state)
 		return true; 
 	if (key_state == WM_KEYUP)
 	{
-		if(inst_ui_menu->menuStates.copiedPosition != "" && inst_game->is_connected())
-			inst_game->send_command_to_console(("setviewpos " + inst_ui_menu->menuStates.copiedPosition).c_str());
+		if(inst_ui_menu->menu_states.copied_position != "" && inst_game->is_connected())
+			inst_game->send_command_to_console(("setviewpos " + inst_ui_menu->menu_states.copied_position).c_str());
 		return true;
 	}
 }
@@ -48,7 +48,7 @@ void CJOpenHud::load_configuration() {
 				//Parse speedometer boolean
 				sscanf_s(line.c_str(), "Speedometer: %d", &value);
 
-				inst_ui_menu->menuStates.velo_meter = value == 1;
+				inst_ui_menu->menu_states.velo_meter = value == 1;
 			}
 			else if(line.find("SepVelo:") != std::string::npos)
 			{
@@ -56,18 +56,18 @@ void CJOpenHud::load_configuration() {
 				//Parse sep speedometer boolean
 				sscanf_s(line.c_str(), "SepVelo: %d", &value1);
 
-				inst_ui_menu->menuStates.sep_velo = value1 == 1;
+				inst_ui_menu->menu_states.sep_velo = value1 == 1;
 			}
 			else if (line.find("Position:") != std::string::npos) {
 				// Parse position
-				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->menuStates.velo_pos.x, &inst_ui_menu->menuStates.velo_pos.y);
+				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->menu_states.velo_pos.x, &inst_ui_menu->menu_states.velo_pos.y);
 			} else if (line.find("Color:") != std::string::npos) {
 				// Parse color
-				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->menuStates.color.x, &inst_ui_menu->menuStates.color.y, &inst_ui_menu->menuStates.color.z, &inst_ui_menu->menuStates.color.w);
+				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->menu_states.color.x, &inst_ui_menu->menu_states.color.y, &inst_ui_menu->menu_states.color.z, &inst_ui_menu->menu_states.color.w);
 			}
 			else if (line.find("Scale:") != std::string::npos) {
 				// Parse scale
-				sscanf_s(line.c_str(), "Scale: %f", &inst_ui_menu->menuStates.velo_scale);
+				sscanf_s(line.c_str(), "Scale: %f", &inst_ui_menu->menu_states.velo_scale);
 			}
 			else if (line.find("PosHud:") != std::string::npos)
 			{
@@ -76,11 +76,11 @@ void CJOpenHud::load_configuration() {
 				//Parse speedometer boolean
 				sscanf_s(line.c_str(), "Speedometer: %d", &value);
 
-				inst_ui_menu->menuStates.show_position = value == 1;
+				inst_ui_menu->menu_states.show_position = value == 1;
 			}
 			else if (line.find("LastCopiedPosition:") != std::string::npos)
 			{
-				sscanf_s(line.c_str(), "Scale: %[^\n]", &inst_ui_menu->menuStates.copiedPosition);
+				sscanf_s(line.c_str(), "Scale: %[^\n]", &inst_ui_menu->menu_states.copied_position);
 			}
 		}
 
@@ -97,27 +97,27 @@ void CJOpenHud::save_configuration() {
 
 	if (configFile.is_open()) {
 		// Save Speedometer on
-		configFile << "Speedometer: " << inst_ui_menu->menuStates.velo_meter << "\n";
+		configFile << "Speedometer: " << inst_ui_menu->menu_states.velo_meter << "\n";
 
 		// Save Sep Speedometer on
-		configFile << "SepVelo: " << inst_ui_menu->menuStates.sep_velo << "\n";
+		configFile << "SepVelo: " << inst_ui_menu->menu_states.sep_velo << "\n";
 		
 		// Save position
-		configFile << "Position: " << inst_ui_menu->menuStates.velo_pos.x << " " << inst_ui_menu->menuStates.velo_pos.y << "\n";
+		configFile << "Position: " << inst_ui_menu->menu_states.velo_pos.x << " " << inst_ui_menu->menu_states.velo_pos.y << "\n";
 
 		// Save color
-		configFile << "Color: " << inst_ui_menu->menuStates.color.x << " " << inst_ui_menu->menuStates.color.y << " " << inst_ui_menu->menuStates.color.z << " " << inst_ui_menu->menuStates.color.w << "\n";
+		configFile << "Color: " << inst_ui_menu->menu_states.color.x << " " << inst_ui_menu->menu_states.color.y << " " << inst_ui_menu->menu_states.color.z << " " << inst_ui_menu->menu_states.color.w << "\n";
 
 		//Save scale
-		configFile << "Scale: " << inst_ui_menu->menuStates.velo_scale << "\n";
+		configFile << "Scale: " << inst_ui_menu->menu_states.velo_scale << "\n";
 
 		//Save Position
-		configFile << "PosHud: " << inst_ui_menu->menuStates.show_position << "\n";
+		configFile << "PosHud: " << inst_ui_menu->menu_states.show_position << "\n";
 
 		//Save Last Copied Position
-		if (inst_ui_menu->menuStates.copiedPosition != "")
+		if (inst_ui_menu->menu_states.copied_position != "")
 		{
-			configFile << "LastCopiedPosition: " << inst_ui_menu->menuStates.copiedPosition << "\n";
+			configFile << "LastCopiedPosition: " << inst_ui_menu->menu_states.copied_position << "\n";
 		}
 
 		configFile.close();  // Close the file
@@ -138,15 +138,17 @@ CJOpenHud::CJOpenHud()
 	inst_ui_settings = std::shared_ptr<ui_settings>(new ui_settings(this));
 	inst_ui_position = std::shared_ptr<ui_position>(new ui_position(this));
 	inst_ui_velocity = std::shared_ptr<ui_velocity>(new ui_velocity(this));
-	inst_ui_velocity_sep = std::shared_ptr<ui_velocity_sep>(new ui_velocity_sep(this));
 	inst_ui_view = std::shared_ptr<ui_view>(new ui_view(this));
 	inst_ui_menu = std::shared_ptr<ui_menu>(new ui_menu(this));
 	inst_ui_demoplayer = std::shared_ptr<ui_demoplayer>(new ui_demoplayer(this));
 	inst_ui_position_marker = std::shared_ptr<ui_position_marker>(new ui_position_marker(this));
 	inst_ui_fps_image = std::shared_ptr<ui_fps_image>(new ui_fps_image(this));
 
+	//Added both INSERT and F6 to open the menu for people who have smaller keyboards and cant find that INSERT key ¬_¬
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
 	inst_input->add_callback(VK_F6, [this](UINT key_state) { return this->bind_toggle_input(key_state); });
+
+	//Keybind to tp to the last saved postion
 	inst_input->add_callback(VK_F3, [this](UINT key_state) { return this->bind_tp_to_saved_pos(key_state); });
 
 	load_configuration();

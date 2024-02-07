@@ -27,8 +27,8 @@ public:
     vec3<float> get_origin();
     vec3<float> get_velocity();
 	static void send_command_to_console(const char* command);
-	bool WorldToScreen(vec3<float> world, float* screen_x, float* screen_y);
-	int getFps_wtmod();
-	int getFps_3xp();
+	bool world_to_screen(vec3<float> world, float* screen_x, float* screen_y);
+	int get_fps_wtmod();
+	int get_fps_3_xp();
 };
 

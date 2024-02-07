@@ -8,6 +8,14 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 
 	float velo = hud->inst_game->get_velocity().Length2D();
 
+	frames_since_last_color_update_++;
+
+	if (frames_since_last_color_update_ >= 35) {
+		// Determine if velocity is increasing or decreasing
+		velocity_increasing_ = velo >= prev_velo;
+		frames_since_last_color_update_ = 0;
+	}
+
 	//Velocity converted to string
 	std::string veloText = std::to_string(static_cast<int>(velo));
 		
@@ -16,7 +24,7 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 		
 	// Check if the mouse is over the text and is being dragged
 	if (ImGui::IsMouseDragging(ImGuiMouseButton_Left) && !is_locked) {
-		vec2<float> prevPos = pos;;
+		vec2<float> prevPos = pos;
 		
 		// Update the text position based on mouse drag
 		pos.x += ImGui::GetIO().MouseDelta.x;
@@ -28,21 +36,29 @@ void ui_velocity::render(CJOpenHud* &hud, bool &is_locked, vec2<float> &pos, flo
 		}
 	}
 
-	ImVec2 outlinePosition(pos.x + 1, pos.y + 1);
+	ImVec2 outline_position(pos.x + 1, pos.y + 1);
 		
-	ImDrawList* drawList = ImGui::GetBackgroundDrawList();
+	ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
 
 	ImGui::SetWindowFontScale(scale);
-	ImGui::PushFont(hud->toxic_font);
-	
-	drawList->AddText(outlinePosition, outlineColor, veloText.c_str());
-	if(prev_velo <= velo)
+	if (hud->inst_ui_menu->menu_states.sep_velo)
 	{
-		drawList->AddText(ImVec2(pos.x, pos.y), hud->inst_ui_position_marker->im_vec4_to_im_col32(color), veloText.c_str());
+		ImGui::PushFont(hud->sep_font);
 	}
 	else
 	{
-		drawList->AddText(ImVec2(pos.x, pos.y), IM_COL32(255, 0, 0, 255), veloText.c_str());
+		ImGui::PushFont(hud->toxic_font);
+	}
+	
+	draw_list->AddText(outline_position, outlineColor, veloText.c_str());
+	
+	if(velocity_increasing_)
+	{
+		draw_list->AddText(ImVec2(pos.x, pos.y), hud->inst_ui_position_marker->im_vec4_to_im_col32(color), veloText.c_str());
+	}
+	else
+	{
+		draw_list->AddText(ImVec2(pos.x, pos.y), IM_COL32(255, 0, 0, 255), veloText.c_str());
 	}
 	ImGui::SetWindowFontScale(1.0f);
 
