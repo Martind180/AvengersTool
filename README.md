@@ -6,6 +6,12 @@ This was based on a cloned version o Salty's CJOpenHud,
 huge shoutout to salty for providing this to the community.
 
 Link to CJOpenHud: https://github.com/iamclint/CJOpenHud
+
+How to use:
+1. Download the Avengers.asi
+2. place the file inside [YourCod4Directory]/miles 
+
+That's it!
 </pre>
 
 ## Current Features:
