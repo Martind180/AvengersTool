@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Avengers.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="awesomefont1.c">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="bahnschrift.c">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="hook_wrapper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_demo.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_draw.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\backends\imgui_impl_dx9.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\backends\imgui_impl_win32.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\misc\cpp\imgui_stdlib.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_tables.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui-docking\imgui_widgets.cpp">
+      <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="render.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_demoplayer.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_fps_image.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_menu.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_position.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_position_marker.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_settings.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_velocity.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_view.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="vectors.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Avengers.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="CodAddresses.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="cod4Structs.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="hook_wrapper.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imconfig.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\backends\imgui_impl_dx9.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\backends\imgui_impl_win32.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imgui_internal.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\misc\cpp\imgui_stdlib.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_rectpack.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_textedit.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui-docking\imstb_truetype.h">
+      <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="render.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Stb</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_demoplayer.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_fps_image.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_menu.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_position.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_position_marker.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_settings.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_velocity.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_view.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="vectors.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header">
+      <UniqueIdentifier>{ca8d972c-3ab1-4777-a981-4ab2c9be95a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{d19f2395-1d1f-463e-8ab5-8ad422c84fac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imgui">
+      <UniqueIdentifier>{96b8a384-349f-4b01-bbff-0830b6aaf1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{fa63207f-0bbd-4c6d-856c-c43825f9d79a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Stb">
+      <UniqueIdentifier>{009df822-75cc-4f33-a3f2-09d1d2f6b191}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
