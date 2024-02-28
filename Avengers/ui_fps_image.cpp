@@ -25,7 +25,7 @@ void ui_fps_image::render()
 	static int height = 0;
 
 	static bool init = false;
-	float scale = hud->inst_ui_demoplayer->demo_player_states.image_scale;
+	float scale = hud->inst_ui_demoplayer->image_scale;
 
 	if (!init) {
 		load_texture_from_file("1.png", &texture1, &width, &height);
@@ -46,7 +46,7 @@ void ui_fps_image::render()
 	ImGui::Begin("Written by Wilhelm uwu", 0, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoDecoration);
 	
 	int fps = 0;
-	if (hud->inst_ui_demoplayer->demo_player_states.threexp) {
+	if (hud->inst_ui_demoplayer->threexp) {
 		fps = hud->inst_game->get_fps_3_xp();
 	}
 	else {

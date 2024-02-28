@@ -1,8 +1,14 @@
 #pragma once
 #include "vectors.h"
 
-struct menu_states
+class ui_menu
 {
+	public:
+	ui_menu(class Avengers* hud);
+	~ui_menu();
+	void menu(Avengers* hud);
+	void render();
+
 	bool demoplayer_menu = false;
 	bool show_position = false;
 	bool velo_meter = false;
@@ -28,26 +34,9 @@ struct menu_states
 
 	char* demo_name;
 	std::string copied_position;
-};
-
-struct values
-{
+	
 	vec2<float> pos1;
 	vec2<float> pos2;
 	vec2<float> pos3;
-	
-	bool load_pos = false;
-};
-
-class ui_menu
-{
-	public:
-	ui_menu(class Avengers* hud);
-	~ui_menu();
-	void menu(Avengers* hud);
-	void render();
-
-	menu_states menu_states;
-	static values values;
 };
 

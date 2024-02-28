@@ -27,8 +27,8 @@ bool Avengers::bind_tp_to_saved_pos(UINT key_state)
 		return true; 
 	if (key_state == WM_KEYUP)
 	{
-		if(inst_ui_menu->menu_states.copied_position != "" && inst_game->is_connected())
-			inst_game->send_command_to_console(("setviewpos " + inst_ui_menu->menu_states.copied_position).c_str());
+		if(inst_ui_menu->copied_position != "" && inst_game->is_connected())
+			inst_game->send_command_to_console(("setviewpos " + inst_ui_menu->copied_position).c_str());
 		return true;
 	}
 }
@@ -48,7 +48,7 @@ void Avengers::load_configuration() {
 				//Parse speedometer boolean
 				sscanf_s(line.c_str(), "Speedometer: %d", &value);
 
-				inst_ui_menu->menu_states.velo_meter = value == 1;
+				inst_ui_menu->velo_meter = value == 1;
 			}
 			else if(line.find("SepVelo:") != std::string::npos)
 			{
@@ -56,31 +56,35 @@ void Avengers::load_configuration() {
 				//Parse sep speedometer boolean
 				sscanf_s(line.c_str(), "SepVelo: %d", &value1);
 
-				inst_ui_menu->menu_states.sep_velo = value1 == 1;
+				inst_ui_menu->sep_velo = value1 == 1;
 			}
 			else if (line.find("Position:") != std::string::npos) {
 				// Parse position
-				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->menu_states.velo_pos.x, &inst_ui_menu->menu_states.velo_pos.y);
+				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->velo_pos.x, &inst_ui_menu->velo_pos.y);
 			} else if (line.find("Color:") != std::string::npos) {
 				// Parse color
-				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->menu_states.color.x, &inst_ui_menu->menu_states.color.y, &inst_ui_menu->menu_states.color.z, &inst_ui_menu->menu_states.color.w);
+				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->color.x, &inst_ui_menu->color.y, &inst_ui_menu->color.z, &inst_ui_menu->color.w);
 			}
 			else if (line.find("Scale:") != std::string::npos) {
 				// Parse scale
-				sscanf_s(line.c_str(), "Scale: %f", &inst_ui_menu->menu_states.velo_scale);
+				sscanf_s(line.c_str(), "Scale: %f", &inst_ui_menu->velo_scale);
 			}
 			else if (line.find("PosHud:") != std::string::npos)
 			{
-				//Parse Position boolean
+				//Parse Position Hud boolean
 				int value;
-				//Parse speedometer boolean
 				sscanf_s(line.c_str(), "Speedometer: %d", &value);
 
-				inst_ui_menu->menu_states.show_position = value == 1;
+				inst_ui_menu->show_position = value == 1;
 			}
 			else if (line.find("LastCopiedPosition:") != std::string::npos)
 			{
-				sscanf_s(line.c_str(), "Scale: %[^\n]", &inst_ui_menu->menu_states.copied_position);
+				//Parse last copied position
+				size_t pos = line.find_first_of("0123456789");
+
+				std::string copied_position = line.substr(pos);
+				
+				inst_ui_menu->copied_position = copied_position;
 			}
 		}
 
@@ -97,27 +101,27 @@ void Avengers::save_configuration() {
 
 	if (configFile.is_open()) {
 		// Save Speedometer on
-		configFile << "Speedometer: " << inst_ui_menu->menu_states.velo_meter << "\n";
+		configFile << "Speedometer: " << inst_ui_menu->velo_meter << "\n";
 
 		// Save Sep Speedometer on
-		configFile << "SepVelo: " << inst_ui_menu->menu_states.sep_velo << "\n";
+		configFile << "SepVelo: " << inst_ui_menu->sep_velo << "\n";
 		
 		// Save position
-		configFile << "Position: " << inst_ui_menu->menu_states.velo_pos.x << " " << inst_ui_menu->menu_states.velo_pos.y << "\n";
+		configFile << "Position: " << inst_ui_menu->velo_pos.x << " " << inst_ui_menu->velo_pos.y << "\n";
 
 		// Save color
-		configFile << "Color: " << inst_ui_menu->menu_states.color.x << " " << inst_ui_menu->menu_states.color.y << " " << inst_ui_menu->menu_states.color.z << " " << inst_ui_menu->menu_states.color.w << "\n";
+		configFile << "Color: " << inst_ui_menu->color.x << " " << inst_ui_menu->color.y << " " << inst_ui_menu->color.z << " " << inst_ui_menu->color.w << "\n";
 
 		//Save scale
-		configFile << "Scale: " << inst_ui_menu->menu_states.velo_scale << "\n";
+		configFile << "Scale: " << inst_ui_menu->velo_scale << "\n";
 
 		//Save Position
-		configFile << "PosHud: " << inst_ui_menu->menu_states.show_position << "\n";
+		configFile << "PosHud: " << inst_ui_menu->show_position << "\n";
 
 		//Save Last Copied Position
-		if (inst_ui_menu->menu_states.copied_position != "")
+		if (inst_ui_menu->copied_position != "")
 		{
-			configFile << "LastCopiedPosition: " << inst_ui_menu->menu_states.copied_position << "\n";
+			configFile << "LastCopiedPosition: " << inst_ui_menu->copied_position << "\n";
 		}
 
 		configFile.close();  // Close the file

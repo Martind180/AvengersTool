@@ -41,7 +41,7 @@ void ui_velocity::render(Avengers* &hud, bool &is_locked, vec2<float> &pos, floa
 	ImDrawList* draw_list = ImGui::GetBackgroundDrawList();
 
 	ImGui::SetWindowFontScale(scale);
-	if (hud->inst_ui_menu->menu_states.sep_velo)
+	if (hud->inst_ui_menu->sep_velo)
 	{
 		ImGui::PushFont(hud->sep_font);
 	}
