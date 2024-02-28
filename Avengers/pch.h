@@ -11,5 +11,6 @@
 #include "framework.h"
 #include "cod4Structs.h"
 #include "CodAddresses.h"
+#include "imgui.h"
 
 #endif //PCH_H
