@@ -74,12 +74,12 @@
     <IncludePath>$(SolutionDir)\$(ProjectName);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <TargetExt>.asi</TargetExt>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
-    <LibraryPath>C:\Programming\CoD4A\AvengersTool\Avengers\lib\Release;$(LibraryPath);C:\Programming\CoD4A\AvengersTool\Avengers\lib</LibraryPath>
+    <LibraryPath>$(SolutionDir)Avengers\lib\Release;$(LibraryPath);$(SolutionDir)Avengers\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <TargetExt>.asi</TargetExt>
     <IncludePath>$(SolutionDir)\$(ProjectName);$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
-    <LibraryPath>C:\Programming\CoD4A\AvengersTool\Avengers\lib\Debug;$(LibraryPath);C:\Programming\CoD4A\AvengersTool\Avengers\lib</LibraryPath>
+    <LibraryPath>$(SolutionDir)Avengers\lib\Debug;$(LibraryPath);$(SolutionDir)Avengers\lib</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
