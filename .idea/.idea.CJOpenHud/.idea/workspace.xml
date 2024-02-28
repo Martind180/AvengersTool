@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2f744d66-7729-48e3-bbfd-ad74bc1888d4" name="Changes" comment="Changed name">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.CJOpenHud/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/Avengers.vcxproj" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/Avengers.vcxproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/CJOpenHud.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/Avengers.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/CJOpenHud.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/Avengers.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/cod4Structs.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/cod4Structs.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/dllmain.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/dllmain.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/input.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/input.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/input.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/input.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/render.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/render.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/render.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/render.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_demoplayer.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_demoplayer.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_demoplayer.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_demoplayer.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_fps_image.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_fps_image.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_fps_image.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_fps_image.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_menu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_menu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_menu.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_menu.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_position.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_position.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_position.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_position.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_position_marker.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_position_marker.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_position_marker.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_position_marker.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_settings.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_settings.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_settings.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_velocity.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_velocity.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_velocity.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_velocity.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_view.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_view.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Avengers/ui_view.h" beforeDir="false" afterPath="$PROJECT_DIR$/Avengers/ui_view.h" afterDir="false" />
-    </list>
+    <list default="true" id="2f744d66-7729-48e3-bbfd-ad74bc1888d4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -40,7 +13,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="TestingFun" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,12 +28,12 @@
               <option name="branches">
                 <list>
                   <RecentBranch>
-                    <option name="branchName" value="master" />
-                    <option name="lastUsedInstant" value="1707333472" />
+                    <option name="branchName" value="JumpTarget" />
+                    <option name="lastUsedInstant" value="1707338186" />
                   </RecentBranch>
                   <RecentBranch>
-                    <option name="branchName" value="TestingFun" />
-                    <option name="lastUsedInstant" value="1707332659" />
+                    <option name="branchName" value="master" />
+                    <option name="lastUsedInstant" value="1707333472" />
                   </RecentBranch>
                 </list>
               </option>
@@ -362,7 +335,7 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "JumpTarget",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -398,7 +371,7 @@
       <workItem from="1707065994053" duration="17000" />
       <workItem from="1707175404656" duration="613000" />
       <workItem from="1707216231464" duration="3510000" />
-      <workItem from="1707308718542" duration="16201000" />
+      <workItem from="1707308718542" duration="16399000" />
     </task>
     <task id="LOCAL-00001" summary="Added avengers functionality">
       <option name="closed" value="true" />
@@ -448,7 +421,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707333493680</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Renaming">
+      <option name="closed" value="true" />
+      <created>1707338155603</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1707338155603</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -474,6 +455,7 @@
     <MESSAGE value="Many changes to refactor large parts of the code" />
     <MESSAGE value="Cleaning up alot of code, improving position markers" />
     <MESSAGE value="Changed name" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed name" />
+    <MESSAGE value="Renaming" />
+    <option name="LAST_COMMIT_MESSAGE" value="Renaming" />
   </component>
 </project>
