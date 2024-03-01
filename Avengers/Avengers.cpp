@@ -58,7 +58,8 @@ void Avengers::load_configuration() {
 
 				inst_ui_menu->sep_velo = value1 == 1;
 			}
-			else if (line.find("Position:") != std::string::npos) {
+			else if (line.find("Position:") != std::string::npos
+						&& line.find("Last") == std::string::npos) {
 				// Parse position
 				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->velo_pos.x, &inst_ui_menu->velo_pos.y);
 			} else if (line.find("Color:") != std::string::npos) {
