@@ -45,6 +45,12 @@ vec3<float> game::get_velocity()
 	return vel;
 }
 
+bool game::isOnGround()
+{
+	return addr_inair != 1023;
+}
+
+
 void game::send_command_to_console(const char* command)
 {
 	DWORD buffer_cmd = 0x4f8d90;
