@@ -47,7 +47,7 @@ vec3<float> game::get_velocity()
 
 bool game::isOnGround()
 {
-	return addr_inair != 1023;
+	return *reinterpret_cast<int*>(addr_inair) != 1023;
 }
 
 
@@ -96,8 +96,8 @@ int game::get_fps_3_xp()
 	return maxFps;
 }
 
-void add_obituary(const std::string& msg)
+void game::add_obituary(const std::string& msg)
 {
-	msg += "\n";
-	reinterpret_cast<void(__cdecl*)(conChannel_t, const char*, msgtype_t)>(0x4FCA50)(conChannel_t::CON_CHANNEL_GAMENOTIFY, msg.c_str(), msgtype_t::MSG_DEFAULT);
+	std::string final_msg = msg + "\n";
+	reinterpret_cast<void(__cdecl*)(conChannel_t, const char*, msgtype_t)>(0x4FCA50)(conChannel_t::CON_CHANNEL_GAMENOTIFY, final_msg.c_str(), msgtype_t::MSG_DEFAULT);
 }
