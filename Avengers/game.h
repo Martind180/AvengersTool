@@ -31,5 +31,6 @@ public:
 	bool world_to_screen(vec3<float> world, float* screen_x, float* screen_y);
 	int get_fps_wtmod();
 	int get_fps_3_xp();
+	void add_obituary(const std::string& msg);
 };
 

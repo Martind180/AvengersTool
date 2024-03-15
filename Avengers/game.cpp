@@ -95,3 +95,9 @@ int game::get_fps_3_xp()
 	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_3xp);
 	return maxFps;
 }
+
+void add_obituary(const std::string& msg)
+{
+	msg += "\n";
+	reinterpret_cast<void(__cdecl*)(conChannel_t, const char*, msgtype_t)>(0x4FCA50)(conChannel_t::CON_CHANNEL_GAMENOTIFY, msg.c_str(), msgtype_t::MSG_DEFAULT);
+}

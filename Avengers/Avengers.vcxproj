@@ -184,6 +184,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="ui_demoplayer.h" />
     <ClInclude Include="ui_fps_image.h" />
+    <ClInclude Include="ui_jump_target.h" />
     <ClInclude Include="ui_menu.h" />
     <ClInclude Include="ui_position.h" />
     <ClInclude Include="ui_position_marker.h" />
@@ -351,6 +352,9 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="ui_fps_image.cpp">
+      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <ClCompile Include="ui_jump_target.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="ui_menu.cpp">
