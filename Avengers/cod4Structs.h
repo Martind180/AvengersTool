@@ -303,4 +303,6 @@ struct cg_t // adress 0x0074E338
     refdef_t Refdef; //0x492C8
 }; //Size=0xFE7F0
 
+
+
 #endif

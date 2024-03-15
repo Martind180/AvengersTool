@@ -1,6 +1,7 @@
 #pragma once
 #include "d3dx9/d3dx9.h"
 #include "vectors.h"
+
 enum connection_state_ : int
 {
     connection_state_uninitialized,
@@ -32,5 +33,6 @@ public:
 	int get_fps_wtmod();
 	int get_fps_3_xp();
 	void add_obituary(const std::string& msg);
+	int getJumpTime();
 };
 

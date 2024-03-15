@@ -50,6 +50,12 @@ bool game::isOnGround()
 	return *reinterpret_cast<int*>(addr_inair) != 1023;
 }
 
+int game::getJumpTime()
+{
+	auto ps = (playerState_t*)(0x794474);
+
+	return ps->JumpTime;
+}
 
 void game::send_command_to_console(const char* command)
 {

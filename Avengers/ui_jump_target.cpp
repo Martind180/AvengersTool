@@ -14,23 +14,49 @@ void ui_jump_target::render()
 
 	if(!hud->inst_game->isOnGround())
 	{
-		if(jt_origin[2] > jump_target_closest_height_)
+		if(jump_target_closest_height_ == nullptr)
 		{
-			jump_target_closest_height_ = jt_origin[2];
+			jump_target_closest_height_ = std::make_unique<float>(player_origin[2]);
 		}
-
-		jump_target_closest_dist_ = player_origin.Dist(jt_origin);
-		jump_target_closest_ = player_origin;
+		else if(player_origin[2] > *jump_target_closest_height_)
+		{
+			*jump_target_closest_height_ = player_origin[2];
+		}
+		
+		if(jump_target_closest_dist_ == nullptr)
+		{
+			jump_target_closest_dist_ = std::make_unique<float>(player_origin.Dist(jt_origin));
+			jump_target_closest_ = player_origin;
+		}
+		else
+		{
+			const float dist = player_origin.Dist(jt_origin);
+			if(dist < *jump_target_closest_dist_)
+			{
+				*jump_target_closest_dist_ = dist;
+				jump_target_closest_ = player_origin;
+			}
+		}
 	}
-	else
+	else if (jump_target_closest_dist_ != nullptr && jump_target_closest_height_ != nullptr && hud->inst_game->getJumpTime())
 	{
-		std::stringstream ss;
-
-		ss << jt_origin[2] - jump_target_closest_height_ << " too low" << std::endl;
-		ss << jump_target_closest_.Dist(jt_origin) << " units off" << std::endl;
-		ss << jt_origin[2] - jump_target_closest_ << " too low at closest position";
-		//TODO: correct the passed in value
-		hud->inst_game->add_obituary(ss);
+		auto time = std::chrono::steady_clock::now();
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(time - prevent_spam_);
+		
+		if(duration.count() >= 100)
+		{
+			std::stringstream ss;
+			ss << jt_origin[2] - *jump_target_closest_height_ << " too low" << std::endl;
+			ss << jump_target_closest_.Dist(jt_origin) << " units off" << std::endl;
+			ss << jt_origin[2] - jump_target_closest_[2] << " too low at closest position";
+			hud->inst_game->add_obituary(ss.str());
+		}
+		
+	
+		jump_target_closest_.clearXYZ();
+		jump_target_closest_dist_ = nullptr;
+		jump_target_closest_height_ = nullptr;
+		prevent_spam_ = std::chrono::steady_clock::now();
 	}
 }
 ui_jump_target::ui_jump_target(Avengers* hud)

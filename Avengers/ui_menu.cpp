@@ -90,7 +90,7 @@ void ui_menu::menu(Avengers* hud)
 	}
 	//#######################################################
 
-	//################# SPEEDOMETER ########################
+	//################# JUMP TARGET ########################
 	ImGui::Checkbox("Enable Jump Target", &jump_target);
 	
 	ImGui::SameLine();
