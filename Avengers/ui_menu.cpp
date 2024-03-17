@@ -90,6 +90,17 @@ void ui_menu::menu(Avengers* hud)
 	}
 	//#######################################################
 
+	//################# JUMP TARGET ########################
+	ImGui::Checkbox("Enable Jump Target", &jump_target);
+	
+	ImGui::SameLine();
+	if(ImGui::Button("Set Jump target"))
+	{
+		jump_target_origin = hud->inst_game->get_origin();
+	}
+
+	//#######################################################
+
 	//################# POSITION MARKERS ########################
 	if (ImGui::Button("Mark Position 1"))
 	{
@@ -187,6 +198,12 @@ void ui_menu::render()
 	if ((velo_meter || sep_velo) && hud->inst_game->is_connected())
 	{
 		hud->inst_ui_velocity->render(hud, lock_velo_pos, velo_pos, velo_scale, color, previous_velo);
+	}
+
+	//Jump Target
+	if(jump_target && hud->inst_game->is_connected())
+	{
+		hud->inst_ui_jump_target->render();
 	}
 
 	//Draw markers

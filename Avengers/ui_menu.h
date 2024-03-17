@@ -38,5 +38,8 @@ class ui_menu
 	vec2<float> pos1;
 	vec2<float> pos2;
 	vec2<float> pos3;
+
+	bool jump_target = false;
+	vec3<float> jump_target_origin;
 };
 

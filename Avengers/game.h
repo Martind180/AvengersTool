@@ -1,6 +1,7 @@
 #pragma once
 #include "d3dx9/d3dx9.h"
 #include "vectors.h"
+
 enum connection_state_ : int
 {
     connection_state_uninitialized,
@@ -26,9 +27,12 @@ public:
     vec3<float> get_view();
     vec3<float> get_origin();
     vec3<float> get_velocity();
+	bool isOnGround();
 	static void send_command_to_console(const char* command);
 	bool world_to_screen(vec3<float> world, float* screen_x, float* screen_y);
 	int get_fps_wtmod();
 	int get_fps_3_xp();
+	void add_obituary(const std::string& msg);
+	int getJumpTime();
 };
 

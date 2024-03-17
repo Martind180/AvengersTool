@@ -148,6 +148,7 @@ Avengers::Avengers()
 	inst_ui_demoplayer = std::shared_ptr<ui_demoplayer>(new ui_demoplayer(this));
 	inst_ui_position_marker = std::shared_ptr<ui_position_marker>(new ui_position_marker(this));
 	inst_ui_fps_image = std::shared_ptr<ui_fps_image>(new ui_fps_image(this));
+	inst_ui_jump_target = std::shared_ptr<ui_jump_target>(new ui_jump_target(this));
 
 	//Added both INSERT and F6 to open the menu for people who have smaller keyboards and cant find that INSERT key ¬_¬
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });

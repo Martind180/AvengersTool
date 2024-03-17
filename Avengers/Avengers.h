@@ -15,6 +15,7 @@
 #include "memory.h"
 #include "ui_demoplayer.h"
 #include "ui_fps_image.h"
+#include "ui_jump_target.h"
 #include "ui_menu.h"
 #include "ui_position_marker.h"
 
@@ -44,6 +45,7 @@ public:
 	std::shared_ptr<ui_demoplayer> inst_ui_demoplayer;
 	std::shared_ptr<ui_position_marker> inst_ui_position_marker;
 	std::shared_ptr<ui_fps_image> inst_ui_fps_image;
+	std::shared_ptr<ui_jump_target> inst_ui_jump_target;
 
 	ImFont* toxic_font;
 	ImFont* sep_font;

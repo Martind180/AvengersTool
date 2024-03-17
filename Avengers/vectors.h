@@ -84,6 +84,7 @@ struct vec3
 		if (stance == 2) { return { this->x, this->y, this->z - 11 }; };
 		return *this;
 	}
+	inline vec3 clearXYZ() { return vec3(0,0,0); };
 };
 
 template <typename T>

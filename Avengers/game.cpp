@@ -45,6 +45,18 @@ vec3<float> game::get_velocity()
 	return vel;
 }
 
+bool game::isOnGround()
+{
+	return *reinterpret_cast<int*>(addr_inair) != 1023;
+}
+
+int game::getJumpTime()
+{
+	auto ps = (playerState_t*)(0x794474);
+
+	return ps->JumpTime;
+}
+
 void game::send_command_to_console(const char* command)
 {
 	DWORD buffer_cmd = 0x4f8d90;
@@ -88,4 +100,10 @@ int game::get_fps_3_xp()
 {
 	int maxFps = (int)*reinterpret_cast<float*>(addr_maxfps_3xp);
 	return maxFps;
+}
+
+void game::add_obituary(const std::string& msg)
+{
+	std::string final_msg = msg + "\n";
+	reinterpret_cast<void(__cdecl*)(conChannel_t, const char*, msgtype_t)>(0x4FCA50)(conChannel_t::CON_CHANNEL_GAMENOTIFY, final_msg.c_str(), msgtype_t::MSG_DEFAULT);
 }
