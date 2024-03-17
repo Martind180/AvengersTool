@@ -38,12 +38,12 @@ void ui_jump_target::render()
 			}
 		}
 	}
-	else if (jump_target_closest_dist_ != nullptr && jump_target_closest_height_ != nullptr && hud->inst_game->getJumpTime())
+	else if (jump_target_closest_dist_ != nullptr && jump_target_closest_height_ != nullptr)
 	{
 		auto time = std::chrono::steady_clock::now();
 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(time - prevent_spam_);
 		
-		if(duration.count() >= 100)
+		if(duration.count() >= 1000)
 		{
 			std::stringstream ss;
 			ss << jt_origin[2] - *jump_target_closest_height_ << " too low" << std::endl;
