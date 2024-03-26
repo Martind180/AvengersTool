@@ -167,6 +167,7 @@
     <ClInclude Include="CodAddresses.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="game_math.h" />
     <ClInclude Include="hook_wrapper.h" />
     <ClInclude Include="imgui-docking\backends\imgui_impl_dx9.h" />
     <ClInclude Include="imgui-docking\backends\imgui_impl_win32.h" />
@@ -178,10 +179,12 @@
     <ClInclude Include="imgui-docking\imstb_truetype.h" />
     <ClInclude Include="imgui-docking\misc\cpp\imgui_stdlib.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="Lmove.h" />
     <ClInclude Include="memory.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="stb_image.h" />
+    <ClInclude Include="ui_anglehelper.h" />
     <ClInclude Include="ui_demoplayer.h" />
     <ClInclude Include="ui_fps_image.h" />
     <ClInclude Include="ui_jump_target.h" />
@@ -211,6 +214,7 @@
     <ClCompile Include="game.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="game_math.cpp" />
     <ClCompile Include="hook_wrapper.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -272,6 +276,7 @@
     <ClCompile Include="render.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="ui_anglehelper.cpp" />
     <ClCompile Include="ui_demoplayer.cpp">
       <AssemblerOutput>NoListing</AssemblerOutput>
       <AssemblerListingLocation>Release\</AssemblerListingLocation>

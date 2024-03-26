@@ -45,6 +45,114 @@ vec3<float> game::get_velocity()
 	return vel;
 }
 
+float game::get_dir_diff()
+{
+	Lmove lMove = get_lmove();
+
+	if (lMove.isForward) {
+		return (lMove.isRight) ? -45.f : 45.f;
+	}
+	else {
+		return (lMove.isRight) ? -90.f : +90.f;
+	}
+
+	return 0;
+}
+
+Lmove game::get_lmove()
+{
+	using namespace mm;
+	input_s* input = (input_s*)addr_usercmd;
+	usercmd_s* cmd = input->GetUserCmd(input->currentCmdNum);
+	Lmove lMove;
+
+	lMove.isInAir = *reinterpret_cast<int*>(addr_inair) == 1023 ? true : false;
+	lMove.isSprint = *reinterpret_cast<int*>(addr_sprint) >= 20 || *reinterpret_cast<int*>(addr_sprint) == 5 ? true : false;
+	lMove.isMoving = fabsf(get_velocity().Length2D()) > 0 ? true : false;
+	lMove.fullLean = *reinterpret_cast<float*>(addr_lean) >= 0.5f || *reinterpret_cast<float*>(addr_lean) >= 0.25f ? true : false;
+
+	if (cmd->forward != 0)
+	{
+		lMove.isBack = cmd->forward == 129 ? true : false;
+		lMove.isForward = cmd->forward == 127 ? true : false;
+	}
+	else
+	{
+		lMove.isBack = false;
+		lMove.isForward = false;
+	}
+
+	if (cmd->side != 0)
+	{
+		lMove.isRight = cmd->side == 127 ? true : false;
+		lMove.isLeft = cmd->side == 129 ? true : false;
+	}
+	else
+	{
+		lMove.isLeft = false;
+		lMove.isRight = false;
+	}
+
+	return lMove;
+}
+
+float game::get_velocity_angle()
+{
+	using namespace mm;
+	vec3<float> velocity = *reinterpret_cast<vec3<float>*>(addr_velocity);
+	return normalise(tilt_angle(truncate_vector(get_velocity())), 0.f, 360.f);
+}
+
+float game::get_delta()
+{
+	float accelAngle = 0.f;
+	get_view();
+
+	accelAngle = mm::normalise(get_view().y + get_dir_diff(), 0.f, 360.f);
+
+	float delta = get_velocity_angle() - accelAngle;
+	return mm::normalise(delta, -180.f, 180.f);
+}
+
+float game::get_delta_optimal()
+{
+	constexpr float g_speed = 190.f;
+
+	Lmove lMove = get_lmove();
+	float speed = get_velocity().Length2D();
+	float deltaOpt = mm::to_degrees(acosf((g_speed - get_accel()) / speed));
+
+	if (get_lmove().isLeft)
+	{
+		deltaOpt *= -1.f;
+	}
+
+	return deltaOpt;
+}
+
+int game::get_fps()
+{
+	int maxFps = *reinterpret_cast<int*>(addr_maxfps);
+	return maxFps;
+}
+
+float game::get_accel()
+{
+	return g_speed / get_fps();
+}
+
+float game::get_optimal_angle()
+{
+	float delta = get_delta();
+	float deltaOptimal = get_delta_optimal();
+
+	float yaw = get_view().y;
+
+	yaw += delta - deltaOptimal;
+
+	return mm::normalise(yaw, 0.f, 360.f);
+}
+
 bool game::isOnGround()
 {
 	return *reinterpret_cast<int*>(addr_inair) != 1023;
@@ -55,6 +163,20 @@ int game::getJumpTime()
 	auto ps = (playerState_t*)(0x794474);
 
 	return ps->JumpTime;
+}
+
+vec2<float> game::get_screen_res()
+{
+	cg_t* ref = (cg_t*)0x0074E338;
+	vec2<float> screenres{};
+	screenres.x = ref->Refdef.ScreenWidth;
+	screenres.y = ref->Refdef.ScreenHeight;
+	return screenres;
+}
+
+vec3<float> game::get_delta_angles()
+{
+	return *reinterpret_cast<vec3<float>*>(addr_delta_angles);
 }
 
 void game::send_command_to_console(const char* command)

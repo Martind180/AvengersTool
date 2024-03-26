@@ -2,6 +2,7 @@
 #include <memory>
 #include "Input.h"
 #include "Render.h"
+#include "ui_anglehelper.h"
 #include "ui_position.h"
 #include "ui_velocity.h"
 #include "ui_view.h"
@@ -39,6 +40,7 @@ public:
 
 	std::shared_ptr<ui_position> inst_ui_position;
 	std::shared_ptr<ui_velocity> inst_ui_velocity;
+	std::shared_ptr<ui_anglehelper> inst_ui_anglehelper;
 	std::shared_ptr<ui_view> inst_ui_view;
 	std::shared_ptr<ui_settings> inst_ui_settings;
 	std::shared_ptr<ui_menu> inst_ui_menu;
