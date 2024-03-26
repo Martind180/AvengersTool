@@ -172,7 +172,10 @@ void ui_menu::menu(Avengers* hud)
 	}
 
 	ImGui::SliderFloat("Marker Size", &marker_size, 5.0f, 100.0f);
+	
+	//#######################################################
 
+	//################# ANGLE HELPER ########################
 	if (ImGui::Checkbox("Anglehelper", &anglehelper_toggle))
 	{
 		hud->save_configuration();
@@ -190,6 +193,8 @@ void ui_menu::menu(Avengers* hud)
 		ImGui::ColorPicker4("Anglehelper Color Picker", &anglehelper_color.x);
 
 		ImGui::EndPopup();
+
+		hud->save_configuration();
 	}
 
 	//#######################################################
