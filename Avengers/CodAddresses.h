@@ -10,5 +10,10 @@ constexpr int addr_timescale = 0x0CBABC88;
 constexpr int addr_view = 0x79B698;  //vec3f
 constexpr int addr_maxfps_wtmod = 0x00795150;
 constexpr int addr_maxfps_3xp = 0x00771F84;
+constexpr int addr_delta_angles = 0x0074E3D0;
+constexpr int addr_usercmd = 0x00CC4FF8;
+constexpr int addr_sprint = 0x00794560; // >= 20 is sprint
+constexpr int addr_lean = 0x007944D0;
+constexpr int addr_maxfps = 0x0CBAB8AC;  //float
 
 #endif

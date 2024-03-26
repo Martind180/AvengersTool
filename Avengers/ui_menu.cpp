@@ -172,6 +172,31 @@ void ui_menu::menu(Avengers* hud)
 	}
 
 	ImGui::SliderFloat("Marker Size", &marker_size, 5.0f, 100.0f);
+	
+	//#######################################################
+
+	//################# ANGLE HELPER ########################
+	if (ImGui::Checkbox("Anglehelper", &anglehelper_toggle))
+	{
+		hud->save_configuration();
+	}
+	ImGui::SameLine();
+	ImGui::ColorButton("Anglehelper color", anglehelper_color);
+
+	if (ImGui::IsItemClicked())
+	{
+		ImGui::OpenPopup("AnglehelperColorPickerPopup");
+	}
+
+	if (ImGui::BeginPopup("AnglehelperColorPickerPopup"))
+	{
+		ImGui::ColorPicker4("Anglehelper Color Picker", &anglehelper_color.x);
+
+		ImGui::EndPopup();
+
+		hud->save_configuration();
+	}
+
 	//#######################################################
 
 	
@@ -198,6 +223,12 @@ void ui_menu::render()
 	if ((velo_meter || sep_velo) && hud->inst_game->is_connected())
 	{
 		hud->inst_ui_velocity->render(hud, lock_velo_pos, velo_pos, velo_scale, color, previous_velo);
+	}
+
+	//Render anglehelper
+	if (anglehelper_toggle && hud->inst_game->is_connected())
+	{
+		hud->inst_ui_anglehelper->render(hud, anglehelper_color);
 	}
 
 	//Jump Target

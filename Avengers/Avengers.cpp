@@ -62,7 +62,12 @@ void Avengers::load_configuration() {
 						&& line.find("Last") == std::string::npos) {
 				// Parse position
 				sscanf_s(line.c_str(), "Position: %f %f", &inst_ui_menu->velo_pos.x, &inst_ui_menu->velo_pos.y);
-			} else if (line.find("Color:") != std::string::npos) {
+			}
+			else if (line.find("Color_anglehelper:") != std::string::npos) {
+				// Parse color
+				sscanf_s(line.c_str(), "Color_anglehelper: %f %f %f %f", &inst_ui_menu->anglehelper_color.x, &inst_ui_menu->anglehelper_color.y, &inst_ui_menu->anglehelper_color.z, &inst_ui_menu->anglehelper_color.w);
+			}
+			else if (line.find("Color:") != std::string::npos) {
 				// Parse color
 				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->color.x, &inst_ui_menu->color.y, &inst_ui_menu->color.z, &inst_ui_menu->color.w);
 			}
@@ -87,6 +92,14 @@ void Avengers::load_configuration() {
 				
 				inst_ui_menu->copied_position = copied_position;
 			}
+			else if (line.find("Anglehelper:") != std::string::npos)
+			{
+				int value1;
+				//Parse anglehelper boolean
+				sscanf_s(line.c_str(), "Anglehelper: %d", &value1);
+
+				inst_ui_menu->anglehelper_toggle = value1 == 1;
+			}
 		}
 
 		config_file.close();
@@ -110,7 +123,7 @@ void Avengers::save_configuration() {
 		// Save position
 		configFile << "Position: " << inst_ui_menu->velo_pos.x << " " << inst_ui_menu->velo_pos.y << "\n";
 
-		// Save color
+		// Save speedometer color
 		configFile << "Color: " << inst_ui_menu->color.x << " " << inst_ui_menu->color.y << " " << inst_ui_menu->color.z << " " << inst_ui_menu->color.w << "\n";
 
 		//Save scale
@@ -118,6 +131,12 @@ void Avengers::save_configuration() {
 
 		//Save Position
 		configFile << "PosHud: " << inst_ui_menu->show_position << "\n";
+
+		//Anglehelper
+		configFile << "Anglehelper: " << inst_ui_menu->anglehelper_toggle << "\n";
+
+		// Save anglehelper color
+		configFile << "Color_anglehelper: " << inst_ui_menu->anglehelper_color.x << " " << inst_ui_menu->anglehelper_color.y << " " << inst_ui_menu->anglehelper_color.z << " " << inst_ui_menu->anglehelper_color.w << "\n";
 
 		//Save Last Copied Position
 		if (inst_ui_menu->copied_position != "")

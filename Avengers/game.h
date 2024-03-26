@@ -1,6 +1,8 @@
 #pragma once
 #include "d3dx9/d3dx9.h"
 #include "vectors.h"
+#include "game_math.h"
+#include "Lmove.h"
 
 enum connection_state_ : int
 {
@@ -27,6 +29,7 @@ public:
     vec3<float> get_view();
     vec3<float> get_origin();
     vec3<float> get_velocity();
+    float get_optimal_angle();
 	bool isOnGround();
 	static void send_command_to_console(const char* command);
 	bool world_to_screen(vec3<float> world, float* screen_x, float* screen_y);
@@ -34,5 +37,18 @@ public:
 	int get_fps_3_xp();
 	void add_obituary(const std::string& msg);
 	int getJumpTime();
+    vec2<float> get_screen_res();
+
+private:
+    vec3<float> get_delta_angles();
+    float get_delta();
+    float get_delta_optimal();
+    float get_velocity_angle();
+    float get_dir_diff();
+    Lmove get_lmove();
+    float get_accel();
+    int get_fps();
+    constexpr static float g_speed = 190.f;
+
 };
 
