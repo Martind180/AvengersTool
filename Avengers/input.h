@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <functional>
+#include <vector>
 typedef std::function<bool(UINT state)> InputCallback;
 class input
 {

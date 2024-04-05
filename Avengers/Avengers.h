@@ -14,6 +14,7 @@
 #include "imgui-docking/backends/imgui_impl_dx9.h"
 #include "hook_wrapper.h"
 #include "memory.h"
+#include "ui_90_lines.h"
 #include "ui_demoplayer.h"
 #include "ui_fps_image.h"
 #include "ui_jump_target.h"
@@ -48,6 +49,7 @@ public:
 	std::shared_ptr<ui_position_marker> inst_ui_position_marker;
 	std::shared_ptr<ui_fps_image> inst_ui_fps_image;
 	std::shared_ptr<ui_jump_target> inst_ui_jump_target;
+	std::shared_ptr<ui_90_lines> inst_ui_90_lines;
 
 	ImFont* toxic_font;
 	ImFont* sep_font;

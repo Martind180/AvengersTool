@@ -199,6 +199,30 @@ void ui_menu::menu(Avengers* hud)
 
 	//#######################################################
 
+	//################# 90 lines ########################
+	if (ImGui::Checkbox("90 lines", &lines_toggle))
+	{
+		hud->save_configuration();
+	}
+	
+	ImGui::SameLine(); ImGui::ColorButton("90 Lines Color Button", lines_color);
+
+	if (ImGui::IsItemClicked())
+	{
+		ImGui::OpenPopup("90LinesColorPickerPopup");
+	}
+
+	if (ImGui::BeginPopup("90LinesColorPickerPopup"))
+	{
+		ImGui::ColorPicker4("90 Lines Color Picker", &lines_color.x);
+
+		ImGui::EndPopup();
+
+		hud->save_configuration();
+	}
+
+	//#######################################################
+
 	
 	ImGui::End();
 }

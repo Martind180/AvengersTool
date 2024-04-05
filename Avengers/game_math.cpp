@@ -53,4 +53,71 @@ namespace mm
 	{
 		return radians * 180.f / PI;
 	}
+
+	void angle_vectors(const vec3<float> angles, float* forward, float* right, float* up)
+	{
+		float angle;
+		static float  sr, sp, sy, cr, cp, cy, cpi = M_PI * 2 / 360;
+
+		angle = angles[1] * cpi;
+		sy = sin(angle);
+		cy = cos(angle);
+		angle = angles[0] * cpi;
+		sp = sin(angle);
+		cp = cos(angle);
+		angle = angles[2] * cpi;
+		sr = sin(angle);
+		cr = cos(angle);
+
+		if (forward) {
+			forward[0] = cp * cy;
+			forward[1] = cp * sy;
+			forward[2] = -sp;
+		}
+
+		if (right) {
+			right[0] = (-1 * sr * sp * cy + -1 * cr * -sy);
+			right[1] = (-1 * sr * sp * sy + -1 * cr * cy);
+			right[2] = -1 * sr * cp;
+		}
+
+		if (up) {
+			up[0] = (cr * sp * cy + -sr * -sy);
+			up[1] = (cr * sp * sy + -sr * cy);
+			up[2] = cr * cp;
+		}
+	}
+
+	void angle_vectors(vec3<float> angles, vec3<float>* forward, vec3<float>* right, vec3<float>* up) {
+		float angle;
+		static float sr, sp, sy, cr, cp, cy, cpi = (M_PI * 2 / 360);
+
+		angle = angles[1] * cpi;
+		sy = sin(angle);
+		cy = cos(angle);
+		angle = angles[0] * cpi;
+		sp = sin(angle);
+		cp = cos(angle);
+		angle = angles[2] * cpi;
+		sr = sin(angle);
+		cr = cos(angle);
+
+		if (forward) {
+			forward->x = cp * cy;
+			forward->y = cp * sy;
+			forward->z = -sp;
+		}
+
+		if (right) {
+			right->x = (-1 * sr * sp * cy + -1 * cr * -sy);
+			right->y = (-1 * sr * sp * sy + -1 * cr * cy);
+			right->z = -1 * sr * cp;
+		}
+
+		if (up) {
+			up->x = (cr * sp * cy + -sr * -sy);
+			up->y = (cr * sp * sy + -sr * cy);
+			up->z = cr * cp;
+		}
+	}
 }

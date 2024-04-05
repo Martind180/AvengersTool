@@ -1,8 +1,10 @@
 #pragma once
+#include "cod4Structs.h"
 #include "d3dx9/d3dx9.h"
 #include "vectors.h"
 #include "game_math.h"
 #include "Lmove.h"
+#include "memory.h"
 
 enum connection_state_ : int
 {
@@ -21,6 +23,30 @@ enum connection_state_ : int
 class game
 {
 public:
+	struct GfxPointVertex
+	{
+		vec3<float> location;
+		char color[4];
+		GfxPointVertex() : location(0, 0, 0), color{ 0, 0, 0, 0 } {};
+		GfxPointVertex(vec3<float> loc, ImColor col)
+		{
+			location = loc;
+			color[0] = col.Value.z * 255;
+			color[1] = col.Value.y * 255;
+			color[2] = col.Value.x * 255;
+			color[3] = col.Value.w * 255;
+		}
+		GfxPointVertex(vec3<float> loc, char r, char g, char b, char a)
+		{
+			location = loc;
+			color[0] = b;
+			color[1] = g;
+			color[2] = r;
+			color[3] = a;
+		}
+	};
+	
+	
 	HWND get_window(); 
 	bool is_focused();
 	bool is_in_main_menu();
@@ -38,6 +64,7 @@ public:
 	void add_obituary(const std::string& msg);
 	int getJumpTime();
     vec2<float> get_screen_res();
+	mem::function<void(int count, int width, GfxPointVertex* verts, bool depthTest)> polyline = 0x613040;
 
 private:
     vec3<float> get_delta_angles();

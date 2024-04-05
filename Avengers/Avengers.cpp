@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Avengers.h"
 
+#include "ui_90_lines.h"
 #include "ui_demoplayer.h"
 
 //pretend its an audio codec for the miles sound system
@@ -67,6 +68,11 @@ void Avengers::load_configuration() {
 				// Parse color
 				sscanf_s(line.c_str(), "Color_anglehelper: %f %f %f %f", &inst_ui_menu->anglehelper_color.x, &inst_ui_menu->anglehelper_color.y, &inst_ui_menu->anglehelper_color.z, &inst_ui_menu->anglehelper_color.w);
 			}
+			else if (line.find("Color_90_lines:") != std::string::npos
+				&& line.find("anglehelper") == std::string::npos) {
+				// Parse color
+				sscanf_s(line.c_str(), "Color_90_lines: %f %f %f %f", &inst_ui_menu->lines_color.x, &inst_ui_menu->lines_color.y, &inst_ui_menu->lines_color.z, &inst_ui_menu->lines_color.w);
+			}
 			else if (line.find("Color:") != std::string::npos) {
 				// Parse color
 				sscanf_s(line.c_str(), "Color: %f %f %f %f", &inst_ui_menu->color.x, &inst_ui_menu->color.y, &inst_ui_menu->color.z, &inst_ui_menu->color.w);
@@ -99,6 +105,14 @@ void Avengers::load_configuration() {
 				sscanf_s(line.c_str(), "Anglehelper: %d", &value1);
 
 				inst_ui_menu->anglehelper_toggle = value1 == 1;
+			}
+			else if (line.find("90_Lines:") != std::string::npos)
+			{
+				int value1;
+				//Parse anglehelper boolean
+				sscanf_s(line.c_str(), "90_Lines: %d", &value1);
+
+				inst_ui_menu->lines_toggle = value1 == 1;
 			}
 		}
 
@@ -138,6 +152,13 @@ void Avengers::save_configuration() {
 		// Save anglehelper color
 		configFile << "Color_anglehelper: " << inst_ui_menu->anglehelper_color.x << " " << inst_ui_menu->anglehelper_color.y << " " << inst_ui_menu->anglehelper_color.z << " " << inst_ui_menu->anglehelper_color.w << "\n";
 
+		//90 lines
+		configFile << "90_Lines: " << inst_ui_menu->lines_toggle << "\n";
+
+		// Save anglehelper color
+		configFile << "Color_90_lines: " << inst_ui_menu->lines_color.x << " " << inst_ui_menu->lines_color.y << " " << inst_ui_menu->lines_color.z << " " << inst_ui_menu->lines_color.w << "\n";
+
+
 		//Save Last Copied Position
 		if (inst_ui_menu->copied_position != "")
 		{
@@ -168,6 +189,7 @@ Avengers::Avengers()
 	inst_ui_position_marker = std::shared_ptr<ui_position_marker>(new ui_position_marker(this));
 	inst_ui_fps_image = std::shared_ptr<ui_fps_image>(new ui_fps_image(this));
 	inst_ui_jump_target = std::shared_ptr<ui_jump_target>(new ui_jump_target(this));
+	inst_ui_90_lines = std::shared_ptr<ui_90_lines>(new ui_90_lines(this));
 
 	//Added both INSERT and F6 to open the menu for people who have smaller keyboards and cant find that INSERT key ¬_¬
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });

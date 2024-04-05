@@ -7,28 +7,28 @@
 
 void init_graphics_stub()
 {
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud && openhud->inst_render)
-		openhud->inst_render->init_graphics();
+	Avengers* hud = Avengers::get_instance();
+	if (hud && hud->inst_render)
+		hud->inst_render->init_graphics();
 }
 
 void __cdecl EngineDraw_Hook()
 {
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud && openhud->inst_hooks && openhud->inst_render)
+	Avengers* hud = Avengers::get_instance();
+	if (hud && hud->inst_hooks && hud->inst_render)
 	{
-		openhud->inst_hooks->hook_map["EngineDraw"]->original(EngineDraw_Hook)();
-		openhud->inst_render->enginedraw();
+		hud->inst_hooks->hook_map["EngineDraw"]->original(EngineDraw_Hook)();
+		hud->inst_render->enginedraw();
 	}
 }
 
 HRESULT __stdcall EndScene_Hook(LPDIRECT3DDEVICE9 dev)
 {
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud && openhud->inst_hooks && openhud->inst_render)
+	Avengers* hud = Avengers::get_instance();
+	if (hud && hud->inst_hooks && hud->inst_render)
 	{
-		auto orig = openhud->inst_hooks->hook_map["EndScene"]->original(EndScene_Hook)(dev);
-		openhud->inst_render->endscene(dev);
+		auto orig = hud->inst_hooks->hook_map["EndScene"]->original(EndScene_Hook)(dev);
+		hud->inst_render->endscene(dev);
 		return orig;
 	}
 	return 1;
@@ -37,14 +37,14 @@ HRESULT __stdcall EndScene_Hook(LPDIRECT3DDEVICE9 dev)
 HRESULT __stdcall Reset_Hook(LPDIRECT3DDEVICE9 pDevice, D3DPRESENT_PARAMETERS* pPresentationParameters)
 {
 
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud && openhud->inst_hooks && openhud->inst_render)
+	Avengers* hud = Avengers::get_instance();
+	if (hud && hud->inst_hooks && hud->inst_render)
 	{
 
-		auto orig = openhud->inst_hooks->hook_map["Reset"]->original(Reset_Hook);
-		openhud->inst_render->invalidate_objects(pDevice);
+		auto orig = hud->inst_hooks->hook_map["Reset"]->original(Reset_Hook);
+		hud->inst_render->invalidate_objects(pDevice);
 		HRESULT rval = orig(pDevice, pPresentationParameters);
-		openhud->inst_render->create_objects(pDevice);
+		hud->inst_render->create_objects(pDevice);
 		return rval;
 	}
 	return 1;
@@ -162,6 +162,12 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 
 void __cdecl render::enginedraw()
 {
+	Avengers* hud = Avengers::get_instance();
+
+	if(hud->inst_game->is_connected() && hud->inst_ui_menu->lines_toggle)
+	{
+		hud->inst_ui_90_lines->render();
+	}
 }
 
 void render::endscene(LPDIRECT3DDEVICE9 dev)
@@ -169,8 +175,8 @@ void render::endscene(LPDIRECT3DDEVICE9 dev)
 	init_imgui(dev);
 	auto& io = ImGui::GetIO();
 
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud->want_input)
+	Avengers* hud = Avengers::get_instance();
+	if (hud->want_input)
 		io.MouseDrawCursor = true;
 	else
 		io.MouseDrawCursor = false;
@@ -203,66 +209,66 @@ void render::create_objects(LPDIRECT3DDEVICE9 pDevice)
 }
 void render::init_graphics()
 {
-	Avengers* openhud = Avengers::get_instance();
+	Avengers* hud = Avengers::get_instance();
 	//call the original function first
-	openhud->inst_hooks->hook_map["InitGraphics"]->original(init_graphics_stub)();
+	hud->inst_hooks->hook_map["InitGraphics"]->original(init_graphics_stub)();
 	static LPDIRECT3DDEVICE9 current_device = nullptr;
-	if (current_device != openhud->inst_game->get_device())
+	if (current_device != hud->inst_game->get_device())
 	{
 		if (current_device)
 		{
 			D3DPRESENT_PARAMETERS p;
 			current_device->Reset(&p);
 		}
-		Avengers* openhud = Avengers::get_instance();
+		Avengers* hud = Avengers::get_instance();
 
-		if (openhud && openhud->inst_hooks) //remove the old hooks
+		if (hud && hud->inst_hooks) //remove the old hooks
 		{
-			if (openhud->inst_hooks->hook_map.find("EndScene") != openhud->inst_hooks->hook_map.end())
-				openhud->inst_hooks->hook_map["EndScene"]->remove();
-			if (openhud->inst_hooks->hook_map.find("Reset") != openhud->inst_hooks->hook_map.end())
-				openhud->inst_hooks->hook_map["Reset"]->remove();
-			if (openhud->inst_hooks->hook_map.find("EngineDraw") != openhud->inst_hooks->hook_map.end())
-				openhud->inst_hooks->hook_map["EngineDraw"]->remove();
+			if (hud->inst_hooks->hook_map.find("EndScene") != hud->inst_hooks->hook_map.end())
+				hud->inst_hooks->hook_map["EndScene"]->remove();
+			if (hud->inst_hooks->hook_map.find("Reset") != hud->inst_hooks->hook_map.end())
+				hud->inst_hooks->hook_map["Reset"]->remove();
+			if (hud->inst_hooks->hook_map.find("EngineDraw") != hud->inst_hooks->hook_map.end())
+				hud->inst_hooks->hook_map["EngineDraw"]->remove();
 		}
 
-		current_device = openhud->inst_game->get_device();
+		current_device = hud->inst_game->get_device();
 		uint32_t* g_methodsTable = (uint32_t*)::calloc(119, sizeof(uint32_t));
 		if (g_methodsTable)
 		{
 			imgui_initialized = false;
-			::memcpy(g_methodsTable, *(uint32_t**)(openhud->inst_game->get_device()), 119 * sizeof(uint32_t));
-			openhud->inst_hooks->Add("EndScene", g_methodsTable[42], EndScene_Hook, hook_type_detour);
-			openhud->inst_hooks->Add("Reset", g_methodsTable[16], Reset_Hook, hook_type_detour);
+			::memcpy(g_methodsTable, *(uint32_t**)(hud->inst_game->get_device()), 119 * sizeof(uint32_t));
+			hud->inst_hooks->Add("EndScene", g_methodsTable[42], EndScene_Hook, hook_type_detour);
+			hud->inst_hooks->Add("Reset", g_methodsTable[16], Reset_Hook, hook_type_detour);
 			mem::mem_set(0x6496d8, 0x90, 3); //disable check for developer to engine draw
-			openhud->inst_hooks->Add("EngineDraw", addr_engine_draw, EngineDraw_Hook, hook_type_detour);
+			hud->inst_hooks->Add("EngineDraw", addr_engine_draw, EngineDraw_Hook, hook_type_detour);
 			//update the wndproc hook on init
-			openhud->inst_input->update_wndproc(openhud->inst_game->get_window());
+			hud->inst_input->update_wndproc(hud->inst_game->get_window());
 		}
 	}
 }
 
 
 
-render::render(Avengers* openhud)
+render::render(Avengers* hud)
 {
 	//doing it this way only works if its loaded before initgraphics is called
-	openhud->inst_hooks->Add("InitGraphics", 0x5f4f09, init_graphics_stub, hook_type_replace_call);
+	hud->inst_hooks->Add("InitGraphics", 0x5f4f09, init_graphics_stub, hook_type_replace_call);
 }
 
 render::~render() //hooks are removed when the hook wrapper is destroyed
 {
-	Avengers* openhud = Avengers::get_instance();
-	if (openhud && openhud->inst_hooks)
+	Avengers* hud = Avengers::get_instance();
+	if (hud && hud->inst_hooks)
 	{
-		if (openhud->inst_hooks->hook_map.count("InitGraphics") > 0)
-			openhud->inst_hooks->hook_map["InitGraphics"]->remove(); //remove hook here in case of a race condition on destructors
-		if (openhud->inst_hooks->hook_map.count("EndScene") > 0)
-			openhud->inst_hooks->hook_map["EndScene"]->remove(); //remove hook here in case of a race condition on destructors
-		if (openhud->inst_hooks->hook_map.count("Reset") > 0)
-			openhud->inst_hooks->hook_map["Reset"]->remove(); //remove hook here in case of a race condition on destructors
-		if (openhud->inst_hooks->hook_map.count("EngineDraw") > 0)
-			openhud->inst_hooks->hook_map["EngineDraw"]->remove(); //remove hook here in case of a race condition on destructors
+		if (hud->inst_hooks->hook_map.count("InitGraphics") > 0)
+			hud->inst_hooks->hook_map["InitGraphics"]->remove(); //remove hook here in case of a race condition on destructors
+		if (hud->inst_hooks->hook_map.count("EndScene") > 0)
+			hud->inst_hooks->hook_map["EndScene"]->remove(); //remove hook here in case of a race condition on destructors
+		if (hud->inst_hooks->hook_map.count("Reset") > 0)
+			hud->inst_hooks->hook_map["Reset"]->remove(); //remove hook here in case of a race condition on destructors
+		if (hud->inst_hooks->hook_map.count("EngineDraw") > 0)
+			hud->inst_hooks->hook_map["EngineDraw"]->remove(); //remove hook here in case of a race condition on destructors
 
 	}
 	ImGui::DestroyContext();

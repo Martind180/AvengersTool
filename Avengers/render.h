@@ -2,6 +2,7 @@
 #include "d3dx9/d3dx9.h"
 #include <functional>
 typedef std::function<void()> RenderCallback;
+
 class render
 {
 public:
