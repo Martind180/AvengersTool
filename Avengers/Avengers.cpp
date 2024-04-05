@@ -92,7 +92,7 @@ void Avengers::load_configuration() {
 			else if (line.find("LastCopiedPosition:") != std::string::npos)
 			{
 				//Parse last copied position
-				size_t pos = line.find_first_of("0123456789");
+				size_t pos = line.find_first_of("-0123456789");
 
 				std::string copied_position = line.substr(pos);
 				
