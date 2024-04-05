@@ -9,6 +9,7 @@ public:
 	~render();
 	void init_graphics();
 	void endscene(LPDIRECT3DDEVICE9 pDevice);
+	void __cdecl enginedraw();
 	void invalidate_objects(LPDIRECT3DDEVICE9 pDevice);
 	void create_objects(LPDIRECT3DDEVICE9 pDevice);
 	void init_imgui(LPDIRECT3DDEVICE9 dev);

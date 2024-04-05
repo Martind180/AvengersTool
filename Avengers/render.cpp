@@ -12,6 +12,16 @@ void init_graphics_stub()
 		openhud->inst_render->init_graphics();
 }
 
+void __cdecl EngineDraw_Hook()
+{
+	Avengers* openhud = Avengers::get_instance();
+	if (openhud && openhud->inst_hooks && openhud->inst_render)
+	{
+		openhud->inst_hooks->hook_map["EngineDraw"]->original(EngineDraw_Hook)();
+		openhud->inst_render->enginedraw();
+	}
+}
+
 HRESULT __stdcall EndScene_Hook(LPDIRECT3DDEVICE9 dev)
 {
 	Avengers* openhud = Avengers::get_instance();
@@ -150,6 +160,10 @@ void render::init_imgui(LPDIRECT3DDEVICE9 dev)
 	dev->SetRenderState(D3DRS_COLORWRITEENABLE, 0xFFFFFFF);
 }
 
+void __cdecl render::enginedraw()
+{
+}
+
 void render::endscene(LPDIRECT3DDEVICE9 dev)
 {
 	init_imgui(dev);
@@ -208,6 +222,8 @@ void render::init_graphics()
 				openhud->inst_hooks->hook_map["EndScene"]->remove();
 			if (openhud->inst_hooks->hook_map.find("Reset") != openhud->inst_hooks->hook_map.end())
 				openhud->inst_hooks->hook_map["Reset"]->remove();
+			if (openhud->inst_hooks->hook_map.find("EngineDraw") != openhud->inst_hooks->hook_map.end())
+				openhud->inst_hooks->hook_map["EngineDraw"]->remove();
 		}
 
 		current_device = openhud->inst_game->get_device();
@@ -218,6 +234,8 @@ void render::init_graphics()
 			::memcpy(g_methodsTable, *(uint32_t**)(openhud->inst_game->get_device()), 119 * sizeof(uint32_t));
 			openhud->inst_hooks->Add("EndScene", g_methodsTable[42], EndScene_Hook, hook_type_detour);
 			openhud->inst_hooks->Add("Reset", g_methodsTable[16], Reset_Hook, hook_type_detour);
+			mem::mem_set(0x6496d8, 0x90, 3); //disable check for developer to engine draw
+			openhud->inst_hooks->Add("EngineDraw", addr_engine_draw, EngineDraw_Hook, hook_type_detour);
 			//update the wndproc hook on init
 			openhud->inst_input->update_wndproc(openhud->inst_game->get_window());
 		}
@@ -243,6 +261,9 @@ render::~render() //hooks are removed when the hook wrapper is destroyed
 			openhud->inst_hooks->hook_map["EndScene"]->remove(); //remove hook here in case of a race condition on destructors
 		if (openhud->inst_hooks->hook_map.count("Reset") > 0)
 			openhud->inst_hooks->hook_map["Reset"]->remove(); //remove hook here in case of a race condition on destructors
+		if (openhud->inst_hooks->hook_map.count("EngineDraw") > 0)
+			openhud->inst_hooks->hook_map["EngineDraw"]->remove(); //remove hook here in case of a race condition on destructors
+
 	}
 	ImGui::DestroyContext();
 }
