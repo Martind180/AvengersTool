@@ -82,6 +82,18 @@
     <ClCompile Include="vectors.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="game_math.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_90_lines.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_anglehelper.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="ui_jump_target.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Avengers.h">
@@ -169,6 +181,21 @@
       <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="vectors.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="game_math.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Lmove.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_90_lines.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_anglehelper.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="ui_jump_target.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

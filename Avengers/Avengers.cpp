@@ -114,6 +114,13 @@ void Avengers::load_configuration() {
 
 				inst_ui_menu->lines_toggle = value1 == 1;
 			}
+			else if (line.find("IWDCheck:") != std::string::npos)
+			{
+				int value1;
+				sscanf_s(line.c_str(), "IWDCheck: %d", &value1);
+
+				inst_ui_menu->iwd_check_disable_toggle = value1 == 1;
+			}
 		}
 
 		config_file.close();
@@ -158,6 +165,7 @@ void Avengers::save_configuration() {
 		// Save anglehelper color
 		configFile << "Color_90_lines: " << inst_ui_menu->lines_color.x << " " << inst_ui_menu->lines_color.y << " " << inst_ui_menu->lines_color.z << " " << inst_ui_menu->lines_color.w << "\n";
 
+		configFile << "IWDCheck: " << inst_ui_menu->iwd_check_disable_toggle << "\n";
 
 		//Save Last Copied Position
 		if (inst_ui_menu->copied_position != "")
@@ -199,6 +207,9 @@ Avengers::Avengers()
 	inst_input->add_callback(VK_F3, [this](UINT key_state) { return this->bind_tp_to_saved_pos(key_state); });
 
 	load_configuration();
+
+	//Write IWD check patch
+	inst_game->toggle_iwd_check(inst_ui_menu->iwd_check_disable_toggle);
 }
 
 Avengers::~Avengers()

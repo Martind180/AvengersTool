@@ -65,6 +65,7 @@ public:
 	int getJumpTime();
     vec2<float> get_screen_res();
 	mem::function<void(int count, int width, GfxPointVertex* verts, bool depthTest)> polyline = 0x613040;
+	void toggle_iwd_check(bool state);
 
 private:
     vec3<float> get_delta_angles();

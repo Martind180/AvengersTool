@@ -16,5 +16,8 @@ constexpr int addr_sprint = 0x00794560; // >= 20 is sprint
 constexpr int addr_lean = 0x007944D0;
 constexpr int addr_maxfps = 0x0CBAB8AC;  //float
 constexpr int addr_engine_draw = 0x658860;
+constexpr int addr_disable_pure_check = 0xD5EC497;
+
+constexpr int addr_cod4x_pakcompare_offset = 0x183D7;
 
 #endif

@@ -229,3 +229,25 @@ void game::add_obituary(const std::string& msg)
 	std::string final_msg = msg + "\n";
 	reinterpret_cast<void(__cdecl*)(conChannel_t, const char*, msgtype_t)>(0x4FCA50)(conChannel_t::CON_CHANNEL_GAMENOTIFY, final_msg.c_str(), msgtype_t::MSG_DEFAULT);
 }
+
+void game::toggle_iwd_check(bool state)
+{
+	void* ptr = GetModuleHandleA("cod4x_021.dll");
+	char* cPtr = static_cast<char*>(ptr);
+	cPtr += addr_cod4x_pakcompare_offset;
+	ptr = static_cast<void*>(cPtr);
+
+	DWORD oldProtect;
+	VirtualProtect(ptr, 0x1, PAGE_EXECUTE_READWRITE, std::addressof(oldProtect));
+
+	if (state) {
+		*reinterpret_cast<char*>(addr_disable_pure_check) = 1;
+		*reinterpret_cast<char*>(ptr) = 0xEB;  //JNE -> JMP
+	}
+	else {
+		*reinterpret_cast<char*>(addr_disable_pure_check) = 0;
+		*reinterpret_cast<char*>(ptr) = 0x75;  //JMP -> JNE
+	}
+
+	VirtualProtect(ptr, 0x1, oldProtect, &oldProtect);
+}

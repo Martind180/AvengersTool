@@ -223,7 +223,19 @@ void ui_menu::menu(Avengers* hud)
 
 	//#######################################################
 
+	//################ Disable MP IWD check #################
 	
+	if (ImGui::Checkbox("Disable IWD check (DO NOT USE IF YOU DON'T HAVE MAP DOWNLOADED)", &iwd_check_disable_toggle))
+	{
+		hud->save_configuration();
+		if (iwd_check_disable_toggle) {
+			Avengers::get_instance()->inst_game->toggle_iwd_check(true);
+		} else {
+			Avengers::get_instance()->inst_game->toggle_iwd_check(false);
+		}
+	}
+
+	//#######################################################
 	ImGui::End();
 }
 

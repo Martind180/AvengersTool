@@ -45,5 +45,7 @@ class ui_menu
 
 	bool jump_target = false;
 	vec3<float> jump_target_origin;
+
+	bool iwd_check_disable_toggle;
 };
 
