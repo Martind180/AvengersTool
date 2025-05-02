@@ -165,6 +165,7 @@
     <ClInclude Include="Avengers.h" />
     <ClInclude Include="cod4Structs.h" />
     <ClInclude Include="CodAddresses.h" />
+    <ClInclude Include="ui_fpswheel.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="game_math.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="dllmain.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
+    <ClCompile Include="ui_fpswheel.cpp" />
     <ClCompile Include="game.cpp">
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
@@ -291,7 +293,6 @@
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="ui_menu.cpp">
-      
       <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <ClCompile Include="ui_position.cpp">

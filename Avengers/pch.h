@@ -12,5 +12,8 @@
 #include "cod4Structs.h"
 #include "CodAddresses.h"
 #include "imgui.h"
+#include "awesomefont1.c"
+#include "bahnschrift.c"
+
 
 #endif //PCH_H
