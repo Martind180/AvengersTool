@@ -143,6 +143,18 @@ void Avengers::load_configuration() {
 
 				inst_ui_menu->fpswheel_size = value1;
 			}
+			else if (line.find("Anglehelper_pixel_scale:") != std::string::npos) {
+				float value1;
+				sscanf_s(line.c_str(), "Anglehelper_pixel_scale: %f", &value1);
+
+				inst_ui_menu->ah_pixel_scale = value1;
+			}
+			else if (line.find("Wheel_anglehelper_pixel_scale:") != std::string::npos) {
+				float value1;
+				sscanf_s(line.c_str(), "Wheel_anglehelper_pixel_scale: %f", &value1);
+
+				inst_ui_menu->wheel_ah_pixel_scale = value1;
+			}
 		}
 
 		config_file.close();
@@ -177,6 +189,8 @@ void Avengers::save_configuration() {
 
 		//Anglehelper
 		configFile << "Anglehelper: " << inst_ui_menu->anglehelper_toggle << "\n";
+		configFile << "Anglehelper_pixel_scale: " << inst_ui_menu->ah_pixel_scale << "\n";
+		configFile << "Wheel_anglehelper_pixel_scale: " << inst_ui_menu->wheel_ah_pixel_scale << "\n";
 
 		// Save anglehelper color
 		configFile << "Color_anglehelper: " << inst_ui_menu->anglehelper_color.x << " " << inst_ui_menu->anglehelper_color.y << " " << inst_ui_menu->anglehelper_color.z << " " << inst_ui_menu->anglehelper_color.w << "\n";
