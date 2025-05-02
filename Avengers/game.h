@@ -20,6 +20,21 @@ enum connection_state_ : int
     connection_state_connected
 };
 
+typedef struct cvar_s
+{
+	char* name;
+	char* string;
+	char* resetString;		// cvar_restart will reset to this value
+	char* latchedString;		// for CVAR_LATCH vars
+	int			flags;
+	bool	modified;			// set each time the cvar is changed
+	int			modificationCount;	// incremented each time the cvar is changed
+	float		value;				// atof( string )
+	int			integer;			// atoi( string )
+	struct cvar_s* next;
+	struct cvar_s* hashNext;
+} cvar_t;
+
 class game
 {
 public:
@@ -65,6 +80,9 @@ public:
 	int getJumpTime();
     vec2<float> get_screen_res();
 	mem::function<void(int count, int width, GfxPointVertex* verts, bool depthTest)> polyline = 0x613040;
+    Lmove get_lmove();
+	float get_fov();
+	cvar_t* getCvar(const char* name);
 
 private:
     vec3<float> get_delta_angles();
@@ -72,7 +90,6 @@ private:
     float get_delta_optimal();
     float get_velocity_angle();
     float get_dir_diff();
-    Lmove get_lmove();
     float get_accel();
     int get_fps();
     constexpr static float g_speed = 190.f;

@@ -10,5 +10,6 @@ public:
 	ui_anglehelper(class Avengers* hud);
 	~ui_anglehelper();
 	void render(Avengers*& hud, ImVec4& color);
+	void renderOnWheel(Avengers*& hud, ImVec4& color);
 };
 

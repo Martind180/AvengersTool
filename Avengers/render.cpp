@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "Render.h"
 #include "Avengers.h"
-#include "awesomefont1.c"
-#include "bahnschrift.c"
-
 
 void init_graphics_stub()
 {

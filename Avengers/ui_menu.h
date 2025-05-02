@@ -19,10 +19,13 @@ class ui_menu
 	float velo_scale = 1.5;
 	bool lock_velo_pos = true;
 	bool anglehelper_toggle = false;
+	bool fpswheel_toggle = false;
+	float fpswheel_size = 20.f;
+	float fpswheel_offset_y = 0.f;
+	float fpswheel_offset_x = 1.f;
 	bool lines_toggle = false;
 	// Default the position to the center of the screen if there is no position in the config file
 	vec2<float> velo_pos = vec2<float>(GetSystemMetrics(SM_CXSCREEN) / 2, GetSystemMetrics(SM_CYSCREEN) / 2);
-	float previous_velo;
 	
 	bool draw_marker1 = false;
 	bool draw_marker2 = false;

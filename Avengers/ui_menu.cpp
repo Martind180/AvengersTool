@@ -223,6 +223,23 @@ void ui_menu::menu(Avengers* hud)
 
 	//#######################################################
 
+	//################# FPS Wheel #######################
+	if (ImGui::Checkbox("FPS Wheel", &fpswheel_toggle)) {
+		hud->save_configuration();
+	}
+
+	if (ImGui::SliderFloat("FPS Wheel height", &fpswheel_size, 1.f, 100.f)) {
+		hud->save_configuration();
+	}
+
+	if (ImGui::SliderFloat("FPS Wheel y-offset", &fpswheel_offset_y, -200.f, 200.f)) {
+		hud->save_configuration();
+	}
+
+	if (ImGui::SliderFloat("FPS Wheel x-offset", &fpswheel_offset_x, 0.45f, 1.f)) {
+		hud->save_configuration();
+	}
+	//#######################################################
 	
 	ImGui::End();
 }
@@ -246,13 +263,19 @@ void ui_menu::render()
 	//Render speedometer
 	if ((velo_meter || sep_velo) && hud->inst_game->is_connected())
 	{
-		hud->inst_ui_velocity->render(hud, lock_velo_pos, velo_pos, velo_scale, color, previous_velo);
+		hud->inst_ui_velocity->render(hud, lock_velo_pos, velo_pos, velo_scale, color);
 	}
 
 	//Render anglehelper
 	if (anglehelper_toggle && hud->inst_game->is_connected())
 	{
 		hud->inst_ui_anglehelper->render(hud, anglehelper_color);
+	}
+
+	if (fpswheel_toggle && hud->inst_game->is_connected())
+	{
+		hud->inst_ui_fpswheel->render(hud);
+		ImVec4 color(0, 0, 0, 255);
 	}
 
 	//Jump Target

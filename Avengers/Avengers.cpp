@@ -109,10 +109,39 @@ void Avengers::load_configuration() {
 			else if (line.find("90_Lines:") != std::string::npos)
 			{
 				int value1;
-				//Parse anglehelper boolean
+				//Parse 90 lines boolean
 				sscanf_s(line.c_str(), "90_Lines: %d", &value1);
 
 				inst_ui_menu->lines_toggle = value1 == 1;
+			}
+			else if (line.find("FPSWheel:") != std::string::npos)
+			{
+				int value1;
+				//Parse fps wheel boolean
+				sscanf_s(line.c_str(), "FPSWheel: %d", &value1);
+
+				inst_ui_menu->fpswheel_toggle = value1 == 1;
+			}
+			else if (line.find("FPSWheelOffsetY:") != std::string::npos) {
+				float value1;
+				//Parse fps wheel float
+				sscanf_s(line.c_str(), "FPSWheelOffsetY: %f", &value1);
+
+				inst_ui_menu->fpswheel_offset_y = value1;
+			}
+			else if (line.find("FPSWheelOffsetX:") != std::string::npos) {
+				float value1;
+				//Parse fps wheel float
+				sscanf_s(line.c_str(), "FPSWheelOffsetX: %f", &value1);
+
+				inst_ui_menu->fpswheel_offset_x = value1;
+			}
+			else if (line.find("FPSWheelSize:") != std::string::npos) {
+				float value1;
+				//Parse fps wheel float
+				sscanf_s(line.c_str(), "FPSWheelSize: %f", &value1);
+
+				inst_ui_menu->fpswheel_size = value1;
 			}
 		}
 
@@ -152,12 +181,17 @@ void Avengers::save_configuration() {
 		// Save anglehelper color
 		configFile << "Color_anglehelper: " << inst_ui_menu->anglehelper_color.x << " " << inst_ui_menu->anglehelper_color.y << " " << inst_ui_menu->anglehelper_color.z << " " << inst_ui_menu->anglehelper_color.w << "\n";
 
-		//90 lines
+		// 90 lines
 		configFile << "90_Lines: " << inst_ui_menu->lines_toggle << "\n";
 
 		// Save anglehelper color
 		configFile << "Color_90_lines: " << inst_ui_menu->lines_color.x << " " << inst_ui_menu->lines_color.y << " " << inst_ui_menu->lines_color.z << " " << inst_ui_menu->lines_color.w << "\n";
 
+		// Save FPS Wheel settings
+		configFile << "FPSWheel: " << inst_ui_menu->fpswheel_toggle << "\n";
+		configFile << "FPSWheelOffsetY: " << inst_ui_menu->fpswheel_offset_y << "\n";
+		configFile << "FPSWheelOffsetX: " << inst_ui_menu->fpswheel_offset_x << "\n";
+		configFile << "FPSWheelSize: " << inst_ui_menu->fpswheel_size << "\n";
 
 		//Save Last Copied Position
 		if (inst_ui_menu->copied_position != "")
@@ -190,6 +224,7 @@ Avengers::Avengers()
 	inst_ui_fps_image = std::shared_ptr<ui_fps_image>(new ui_fps_image(this));
 	inst_ui_jump_target = std::shared_ptr<ui_jump_target>(new ui_jump_target(this));
 	inst_ui_90_lines = std::shared_ptr<ui_90_lines>(new ui_90_lines(this));
+	inst_ui_fpswheel = std::shared_ptr<ui_fpswheel>(new ui_fpswheel(this));
 
 	//Added both INSERT and F6 to open the menu for people who have smaller keyboards and cant find that INSERT key ¬_¬
 	inst_input->add_callback(VK_INSERT, [this](UINT key_state) { return this->bind_toggle_input(key_state); });

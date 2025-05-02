@@ -29,8 +29,15 @@ bool game::is_connected()
 
 vec3<float> game::get_view()
 {
-	vec3<float> view = *(vec3<float>*)addr_view;
-	return view;
+	vec3<float> deltaAngles = *reinterpret_cast<vec3<float>*>(addr_deltaAngles);
+	vec3<float> cameraAngles = *reinterpret_cast<vec3<float>*>(addr_writeableAngles);
+	vec3<float> normalized;
+
+	normalized.x = mm::normalise(cameraAngles.x + deltaAngles.x, 0.f, 360.f);
+	normalized.y = mm::normalise(cameraAngles.y + deltaAngles.y, 0.f, 360.f);
+	normalized.z = mm::normalise(cameraAngles.z + deltaAngles.z, 0.f, 360.f);
+
+	return normalized;
 }
 
 vec3<float> game::get_origin()
@@ -177,6 +184,23 @@ vec2<float> game::get_screen_res()
 vec3<float> game::get_delta_angles()
 {
 	return *reinterpret_cast<vec3<float>*>(addr_delta_angles);
+}
+
+float game::get_fov()
+{
+	cvar_t* fov = getCvar("cg_fov");
+	cvar_t* fovScale = getCvar("cg_fovScale");
+	return fov->value * fovScale->value;
+}
+
+cvar_t* game::getCvar(const char* name)
+{
+	DWORD addr = 0x56b5d0;
+	__asm
+	{
+		mov edi, name
+		call[addr]
+	}
 }
 
 void game::send_command_to_console(const char* command)

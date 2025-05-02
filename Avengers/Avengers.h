@@ -20,6 +20,7 @@
 #include "ui_jump_target.h"
 #include "ui_menu.h"
 #include "ui_position_marker.h"
+#include "ui_fpswheel.h"
 
 extern "C" {
 	bool __declspec(dllexport) __stdcall RIB_Main(int a, int b);
@@ -50,6 +51,7 @@ public:
 	std::shared_ptr<ui_fps_image> inst_ui_fps_image;
 	std::shared_ptr<ui_jump_target> inst_ui_jump_target;
 	std::shared_ptr<ui_90_lines> inst_ui_90_lines;
+	std::shared_ptr<ui_fpswheel> inst_ui_fpswheel;
 
 	ImFont* toxic_font;
 	ImFont* sep_font;
