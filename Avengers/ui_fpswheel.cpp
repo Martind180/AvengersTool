@@ -46,7 +46,7 @@ void ui_fpswheel::render(Avengers* hud)
 		{125, IM_COL32(255, 0, 0, 200)},
 		{200, IM_COL32(0, 255, 0, 200)},
 		{250, IM_COL32(0, 0, 200, 200)},
-		{251, IM_COL32(0, 0, 255, 200)},
+		{251, IM_COL32(255, 255, 0, 200)},
 		{333, IM_COL32(95, 0, 160, 200)}
 	};
 
@@ -55,7 +55,7 @@ void ui_fpswheel::render(Avengers* hud)
 	float yaw = hud->inst_game->get_view().y;
 	float fov = hud->inst_game->get_fov();
 
-	float pixelScale = (hud->inst_game->get_screen_res().x / fov);
+	float pixelScale = (hud->inst_game->get_screen_res().x / fov) * hud->inst_ui_menu->wheel_pixel_scale;
 
 	for (auto const& [fps, zone] : fpsZones) {
 		float onePx;

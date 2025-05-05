@@ -10,7 +10,7 @@ void ui_anglehelper::render(Avengers*& hud, ImVec4& color)
 	float optAngle = hud->inst_game->get_optimal_angle();
 	float fov = hud->inst_game->get_fov();
 
-	float pixelScale = (hud->inst_game->get_screen_res().x / fov);
+	float pixelScale = (hud->inst_game->get_screen_res().x / fov) * hud->inst_ui_menu->ah_pixel_scale;
 
 	screen.y = hud->inst_game->get_screen_res().y / 2;
 	float ahOffset = yaw - optAngle;
@@ -31,7 +31,7 @@ void ui_anglehelper::renderOnWheel(Avengers*& hud, ImVec4& color)  //TODO: refac
 	float optAngle = hud->inst_game->get_optimal_angle();
 	float fov = hud->inst_game->get_fov();
 
-	float pixelScale = (hud->inst_game->get_screen_res().x / fov);
+	float pixelScale = (hud->inst_game->get_screen_res().x / fov) * hud->inst_ui_menu->wheel_ah_pixel_scale;
 
 	screen.y = fpsWheelPos;
 	float ahOffset = yaw - optAngle;
