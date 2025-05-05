@@ -247,6 +247,10 @@ void ui_menu::menu(Avengers* hud)
 	if (ImGui::SliderFloat("Wheel anglehelper pixel scale", &wheel_ah_pixel_scale, 0.3, 1.f)) {
 		hud->save_configuration();
 	}
+
+	if (ImGui::SliderFloat("Wheel pixel scale", &wheel_pixel_scale, 0.3, 1.f)) {
+		hud->save_configuration();
+	}
 	//#######################################################
 	
 	ImGui::End();

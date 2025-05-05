@@ -155,6 +155,12 @@ void Avengers::load_configuration() {
 
 				inst_ui_menu->wheel_ah_pixel_scale = value1;
 			}
+			else if (line.find("Wheel_pixel_scale:") != std::string::npos) {
+				float value1;
+				sscanf_s(line.c_str(), "Wheel_pixel_scale: %f", &value1);
+
+				inst_ui_menu->wheel_pixel_scale = value1;
+			}
 		}
 
 		config_file.close();
@@ -206,6 +212,7 @@ void Avengers::save_configuration() {
 		configFile << "FPSWheelOffsetY: " << inst_ui_menu->fpswheel_offset_y << "\n";
 		configFile << "FPSWheelOffsetX: " << inst_ui_menu->fpswheel_offset_x << "\n";
 		configFile << "FPSWheelSize: " << inst_ui_menu->fpswheel_size << "\n";
+		configFile << "Wheel_pixel_scale: " << inst_ui_menu->wheel_pixel_scale << "\n";
 
 		//Save Last Copied Position
 		if (inst_ui_menu->copied_position != "")
